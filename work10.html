@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ダンス動画の骨格推定 | WORKS</title>
+  <meta name="description" content="YOLOv4とHRNetを組み合わせ、ダンス動画の人物から17点の骨格を可視化するMATLAB作品。処理の工夫と課題を紹介します。">
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work10.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 10 <span>/ 10</span></p>
+        <h1 data-split data-hero>ダンス動画の<wbr>骨格推定</h1>
+        <p class="lead reveal ap" data-hero>動画から人物と17点の骨格を検出し、動きを可視化するMATLABプログラム</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#result">処理結果を見る ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/dance-pose-estimation" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="#how">処理の流れ ↓</a>
+          <a class="btn" href="#info">作品について ↓</a>
+          <a class="detail-back" href="works.html">作品一覧へ ↗</a>
+        </div>
+      </div>
+    </section>
+    <div class="wrap">
+      <section class="detail-section">
+        <h2 class="reveal">About <small>説明</small></h2>
+        <div class="prose about ap">
+          <p class="lead reveal">ダンス動画の人物を見つけ、<strong>関節と骨格を重ねて動きを見える形にする</strong>プログラムです。</p>
+          <p class="reveal">人物の検出にはYOLOv4、17点のキーポイントの検出にはHRNetを使用。2つの学習済みモデルをつなぎ、動画の全フレームを処理してMP4へ書き出します。</p>
+          <p class="reveal">既存のモデルをただ使うだけでなく、各関数の役割を確かめながらコードを記述しました。Claudeには関数の説明やデバッグの支援を受けています。</p>
+        </div>
+      </section>
+      <section class="detail-section" id="result">
+        <h2 class="reveal">Result <small>実際の処理結果</small></h2>
+        <figure class="media-figure reveal">
+          <div class="player"><video src="images/work10.mp4" poster="images/work10.jpg" controls playsinline preload="metadata">お使いのブラウザでは動画を再生できません。</video></div>
+          <figcaption class="ap">フリー素材で再実行した比較映像（8秒・無音）。左が入力、右が骨格を重ねた出力です。</figcaption>
+        </figure>
+        <p class="ap reveal">映像素材：<a href="https://www.pexels.com/video/video-of-a-man-dancing-7571381/" target="_blank" rel="noopener">Antoni Shkraba / Pexels</a>（<a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels License</a>）。一部を切り出し、明度調整・骨格描画・比較編集を行っています。</p>
+      </section>
+      <section class="detail-section" id="how">
+        <h2 class="reveal">Process <small>処理の流れ</small></h2>
+        <figure class="reveal"><button type="button" class="zoomable" aria-label="拡大して見る：人物検出と骨格推定の模式図"><img src="images/work10_process.svg" alt="人物領域を検出し、17点のキーポイントと骨格を重ねる処理の模式図" width="960" height="540" loading="lazy"></button><figcaption>処理を説明する模式図です。実際の推定結果ではありません。</figcaption></figure>
+        <div class="prose ap"><ol class="steps-list reveal">
+          <li><b>明るさを整える</b><span>動画を1フレームずつ取り出し、HSV色空間の明度を1.2倍に調整します。</span></li>
+          <li><b>人物を見つける</b><span>YOLOv4で人物領域を検出し、人物のラベルだけを次の処理に渡します。</span></li>
+          <li><b>骨格を推定する</b><span>人物領域をHRNetに渡し、顔や手足のキーポイント17点を検出します。</span></li>
+          <li><b>動画に書き出す</b><span>関節を黄色、骨格を青色で重ね、入力と同じフレームレートのMP4に保存します。</span></li>
+        </ol></div>
+      </section>
+      <section class="detail-section">
+        <h2 class="reveal">Findings <small>結果と課題</small></h2>
+        <div class="prose ap">
+          <p class="reveal">掲載した8秒・12fps（96フレーム）の例は、MATLAB R2026aで約7分4秒かけて処理しました。制作時の検証では、激しい動きや前屈みの姿勢では、人物の検出失敗や骨格のずれが見られました。</p>
+          <p class="reveal">明度補正による精度改善は、今回の映像では明確に確認できていません。照明条件を変えた比較、軽量モデルやGPUの利用、前後フレームからの補間が今後の改善点です。</p>
+        </div>
+      </section>
+      <section class="detail-section" id="info">
+        <h2 class="reveal">Information <small>作品情報</small></h2>
+        <dl class="meta-grid reveal ap">
+          <div><dt>提出日</dt><dd>2026年5月25日（MATLABの最終課題）</dd></div>
+          <div><dt>動作環境</dt><dd>Windows 11 / MATLAB R2026a</dd></div>
+          <div><dt>使用技術</dt><dd>YOLOv4・HRNet / Image Processing Toolbox・Computer Vision Toolbox・Deep Learning Toolbox</dd></div>
+          <div><dt>実装</dt><dd>コードは本人が記述。Claudeは関数の説明・デバッグ・構成の支援に使用</dd></div>
+          <div><dt>公開内容</dt><dd>ソースコード・フリー素材での比較映像・処理の説明と課題</dd></div>
+        </dl>
+      </section>
+    </div>
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work9.html"><small>← Prev / 09</small><b>Snapmap</b></a>
+      <a href="work1.html"><small>Next / 01 →</small><b>ScrumCanvas</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

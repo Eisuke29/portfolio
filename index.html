@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>木下 瑛介 | PORTFOLIO</title>
+  <meta name="description" content="明治大学 総合数理学部 先端メディアサイエンス学科 2年 木下瑛介のポートフォリオ">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero">
+      <canvas id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="wrap hero-inner">
+        <p class="eyebrow reveal" data-hero>Portfolio 2026</p>
+        <h1 class="hero-title"><span class="hero-name" id="heroName">Eisuke <em>Kinoshita</em></span><small class="reveal" data-hero style="--d:2">木下 瑛介</small></h1>
+        <p class="hero-lead reveal" data-hero style="--d:3">明治大学 総合数理学部 先端メディアサイエンス学科 2年<br>
+          <span class="typing" data-typing="Interaction|Game|Film|Simulation|Physical Computing"><span class="text"></span><span class="caret"></span></span>
+        </p>
+        <div class="hero-actions reveal" data-hero style="--d:5">
+          <a class="btn primary magnetic" href="works.html">作品を<wbr>見る</a>
+          <a class="btn magnetic" href="#about">自己紹介</a>
+        </div>
+      </div>
+      <p class="hero-hint" id="heroHint" aria-live="polite"></p>
+      <span class="scroll-cue">Scroll</span>
+      <button type="button" class="btn tilt-btn" id="tiltBtn" hidden>スマホの<wbr>傾きで<wbr>動かす</button>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap split-grid">
+        <div class="split-head">
+          <p class="eyebrow reveal">01 — About</p>
+          <h2 class="section-title" data-split>About<small>自己紹介</small></h2>
+        </div>
+        <div class="split-body">
+          <dl class="profile-list reveal">
+            <div><dt>氏名</dt><dd>木下 瑛介 <small>きの<wbr>した<wbr> えいすけ</small></dd></div>
+            <div><dt>所属</dt><dd>明治大学総合数理学部先端メディアサイエンス学科 2年4組18番</dd></div>
+            <div><dt>生年月日</dt><dd>2007年2月9日<wbr>（19歳）</dd></div>
+            <div><dt>出身</dt><dd>東京都</dd></div>
+          </dl>
+          <div class="stats reveal">
+            <div><b data-count="10">10</b><span>作品</span></div>
+            <div><b data-count="7">7</b><span>ブラウザで体験</span></div>
+            <div><b data-count="2">2</b><span>映像作品</span></div>
+          </div>
+          <h3 class="sub-head reveal">学歴</h3>
+          <ol class="timeline reveal">
+            <li><time datetime="2013-04">2013.04 – 2019.03</time><span>杉並区立高井戸第四小学校</span></li>
+            <li><time datetime="2019-04">2019.04 – 2022.03</time><span>明治大学付属中野中学校</span></li>
+            <li><time datetime="2022-04">2022.04 – 2025.03</time><span>明治大学付属中野高等学校</span></li>
+            <li><time datetime="2025-04">2025.04 –</time><span>明治大学総合数理学部先端メディアサイエンス学科 在学中</span></li>
+          </ol>
+          <h3 class="sub-head reveal">趣味・<wbr>特技</h3>
+          <div class="hobby">
+            <p class="reveal">趣味は<wbr>音楽と<wbr>スポーツ観戦です。<wbr>好きな<wbr>アーティストは<strong>SEKAI NO OWARI</strong>で、<wbr>アニメでは<strong>エヴァンゲリオン</strong>が<wbr>好きな<wbr>作品です。</p>
+            <p class="reveal ap">特技は<strong>ラグビー</strong>で、中学1年から高校1年まで続けました。ラグビーの経験は、作品「ScrumCanvas」の題材にもなっています。小学生のときには<strong>空手</strong>（琉球少林流空手道 月心会）で少年少女初段を取得しました。</p>
+            <p class="reveal ap">いまは塾講師のアルバイトをしていて、その勤怠管理システムも自分でつくっています。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="works">
+      <div class="wrap rail-head">
+        <div>
+          <p class="eyebrow reveal">02 — Works</p>
+          <h2 class="section-title" data-split>Selected Works<small>主な<wbr>作品</small></h2>
+        </div>
+        <div class="rail-controls reveal">
+          <button type="button" class="icon-btn" data-rail="-1" aria-label="前の作品へ">←</button>
+          <button type="button" class="icon-btn" data-rail="1" aria-label="次の作品へ">→</button>
+          <a class="btn magnetic" href="works.html">すべての<wbr>作品 →</a>
+        </div>
+      </div>
+      <div class="rail" role="region" aria-label="主な作品。横にスクロールできます" tabindex="0">
+    <article class="work-card reveal" data-filter="processing tool play" data-date="2025-09-12" data-no="1" style="--d:1">
+      <a href="work1.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">01</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work1.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>ScrumCanvas</h3>
+          <p>ラグビーの<wbr>サインプレーを<wbr>可視化する<wbr>3D戦術シミュレーター</p>
+          <ul class="tags"><li>Processing</li><li>3D</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2025.09</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="game interaction processing play" data-date="2026-01-19" data-no="2" style="--d:2">
+      <a href="work2.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">02</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work2.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>チャンバラ <span class="nw">-RING OUT-</span></h3>
+          <p>自作の<wbr>剣型コントローラーで<wbr>戦う<wbr>2人対戦チャンバラゲーム</p>
+          <ul class="tags"><li>Processing</li><li>Arduino</li><li>チーム制作</li></ul>
+          <div class="work-meta"><span>2026.01</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="game unity play" data-date="2026-06-23" data-no="3" style="--d:0">
+      <a href="work3.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">03</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work3.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>CHROMATIC SHIFT</h3>
+          <p>背景色を<wbr>切り<wbr>替えて<wbr>足場や<wbr>箱を<wbr>消しながら<wbr>進む<wbr>3Dパズルアクション</p>
+          <ul class="tags"><li>Unity</li><li>3D</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.06</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="film" data-date="2026-06-12" data-no="4" style="--d:1">
+      <a href="work4.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">04</span>
+          <span class="badge">VIDEO</span>
+          <img src="images/thumbs/work4.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work4.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h3>DriftWalk Theater</h3>
+          <p>RDWと<wbr>GVSを<wbr>用いた、<wbr>映像視聴中の<wbr>直線<wbr>移動感維持型 歩行誘導システム<wbr>（ビデオプロトタイプ）</p>
+          <ul class="tags"><li>映像</li><li>ビデオプロトタイプ</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.06</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="interaction unity play" data-date="2026-07-24" data-no="5" style="--d:2">
+      <a href="work5.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">05</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work5.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>UNSPOKEN</h3>
+          <p>参加者自身が<wbr>操作体系を<wbr>構成する<wbr>ハンドジェスチャ・インタラクション</p>
+          <ul class="tags"><li>Unity</li><li>ハンドジェスチャ</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.07</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="film" data-date="2026-06-15" data-no="6" style="--d:0">
+      <a href="work6.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">06</span>
+          <span class="badge">VIDEO</span>
+          <img src="images/thumbs/work6.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work6.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h3>エレベーター</h3>
+          <p>作業を<wbr>終えた<wbr>主人公が、<wbr>帰る<wbr>ために<wbr>エレベーターへ<wbr>向かう。<wbr>何気ない<wbr>日常の<wbr>中に<wbr>違和感が<wbr>入り込む短編ホラー。</p>
+          <ul class="tags"><li>映像</li><li>ホラー</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.06</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="interaction play web" data-date="2026-10-19" data-no="7" style="--d:1">
+      <a href="work7.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">07</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work7.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work7.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h3>みんなの組体操</h3>
+          <p>ポーズを<wbr>とるだけで、<wbr>約600人の<wbr>棒人間が<wbr>その形の<wbr>組体操を<wbr>つくる<wbr>インタラクション</p>
+          <ul class="tags"><li>JavaScript</li><li>画像認識</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.10</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="ui play" data-date="2026-05-26" data-no="8" style="--d:2">
+      <a href="work8.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">08</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work8.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work8.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h3>McDonald's App Trace</h3>
+          <p class="ap">Figma でマクドナルド公式アプリの30画面と画面遷移を完全再現したプロトタイプ</p>
+          <ul class="tags"><li>Figma</li><li>UI トレース</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.05</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="web play" data-date="2026-05-12" data-no="9" style="--d:0">
+      <a href="work9.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">09</span>
+          <span class="badge play">WEB APP</span>
+          <img src="images/thumbs/work9.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>Snapmap</h3>
+          <p class="ap">気になる場所のURLをカードにして、地図に保存・共有するWebアプリ</p>
+          <ul class="tags"><li>Next.js</li><li>TypeScript</li><li>地図</li></ul>
+          <div class="work-meta"><span>2026.05</span><span>詳しく見る <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="vision matlab" data-date="2026-05-25" data-no="10" style="--d:1">
+      <a href="work10.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">10</span>
+          <span class="badge">VISION</span>
+          <img src="images/thumbs/work10.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>ダンス動画の<wbr>骨格推定</h2>
+          <p class="ap">人物検出と17点の骨格推定を組み合わせ、動画の動きを可視化</p>
+          <ul class="tags"><li>MATLAB</li><li>YOLOv4</li><li>HRNet</li></ul>
+          <div class="work-meta"><span>2026.05</span><span>詳しく見る <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+
+      </div>
+    </section>
+
+    <section class="section" id="history">
+      <div class="wrap split-grid">
+        <div class="split-head">
+          <p class="eyebrow reveal">03 — History</p>
+          <h2 class="section-title" data-split>History<small>これまでの歩み</small></h2>
+        </div>
+        <div class="split-body">
+        <ol class="history" data-history>
+          <li class="history-year reveal" aria-hidden="true">〜2024</li>
+          <li class="history-item reveal" data-kind="award"><div class="history-row"><time datetime="2018">2017–18頃</time><b>空手で少年少女初段を取得</b><small>琉球少林流空手道 月心会／小学5〜6年のころ</small></div></li>
+          <li class="history-item reveal"><a class="history-row" href="work1.html" data-peek="images/thumbs/work1.jpg"><time datetime="2019-04">2019–2023</time><b>ラグビー部（中学1年〜高校1年）</b><small>明治大学付属中野中学校・高等学校／このときの経験が ScrumCanvas の題材に</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-year reveal" aria-hidden="true">2025</li>
+          <li class="history-item reveal"><div class="history-row"><time datetime="2025-04">2025.04</time><b>明治大学 総合数理学部 先端メディアサイエンス学科に入学</b><small>明治大学付属中野高等学校から進学</small></div></li>
+          <li class="history-item reveal"><a class="history-row" href="work1.html" data-peek="images/thumbs/work1.jpg"><time datetime="2025-09-12">2025.09.12</time><b>ScrumCanvas を発表</b><small>EP演習 成果発表／ラグビーのサインプレーを3Dで可視化（Processing）</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-year reveal" aria-hidden="true">2026</li>
+          <li class="history-item reveal" data-kind="award"><a class="history-row" href="work2.html" data-peek="images/thumbs/work2.jpg"><time datetime="2026-01-19">2026.01.19</time><b>チャンバラ -RING OUT- を発表、学生投票で<em>1位</em><span class="history-badge">AWARD</span></b><small>プログラミング演習Ⅱ 最終制作課題 発表会／4人チーム・Arduino の剣型コントローラー</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work9.html" data-peek="images/thumbs/work9.jpg"><time datetime="2026-05-12">2026.05.12</time><b>Snapmap をデモ発表</b><small>ゼミのエージェントコーディング入門／場所のURLを地図に保存・共有するWebアプリ</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work10.html" data-peek="images/thumbs/work10.jpg"><time datetime="2026-05-25">2026.05.25</time><b>ダンス動画の骨格推定を制作</b><small>MATLAB課題／YOLOv4とHRNetで人物の動きを可視化</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work8.html" data-peek="images/thumbs/work8.jpg"><time datetime="2026-05-26">2026.05.26</time><b>McDonald's App Trace を発表</b><small>ゼミの Figma 入門課題／公式アプリの30画面と画面遷移を再現</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work4.html" data-peek="images/thumbs/work4.jpg"><time datetime="2026-06-12">2026.06.12</time><b>DriftWalk Theater を発表</b><small>仮配属ゼミ 渡邊研究室 春学期中間発表／ビデオプロトタイプ</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work6.html" data-peek="images/thumbs/work6.jpg"><time datetime="2026-06-15">2026.06.15</time><b>エレベーター を上映</b><small>映像アニメーション表現／約45秒の短編ホラー</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work3.html" data-peek="images/thumbs/work3.jpg"><time datetime="2026-06-23">2026.06.23</time><b>CHROMATIC SHIFT を発表</b><small>スキルアップゼミ Unity回／背景色を切り替える3Dパズルアクション</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work5.html" data-peek="images/thumbs/work5.jpg"><time datetime="2026-07-24">2026.07.24</time><b>UNSPOKEN を発表</b><small>仮配属ゼミ 渡邊研究室 春学期最終発表／手の合図を自分で決めるインタラクション</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="work7.html" data-peek="images/thumbs/work7.jpg"><time datetime="2026-10">2026.10</time><b>みんなの組体操 を制作</b><small>WP実習 任意課題／ポーズをとるだけで約600人の棒人間が組体操に</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-item reveal"><a class="history-row" href="works.html"><time datetime="2026-10">2026.10</time><b>このポートフォリオを公開</b><small>過去の作品4つを、ブラウザで遊べる Web 版に作り直した</small><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li class="history-year reveal" aria-hidden="true">Now</li>
+          <li class="history-item reveal"><div class="history-row"><time datetime="2026-10">2026.10 現在</time><b>塾講師アルバイトの勤怠管理システムを制作中</b><small>自分が働いている塾講師のアルバイトで使う、勤怠を記録・管理するシステム</small></div></li>
+        </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="wrap">
+        <p class="eyebrow reveal">04 — Skills</p>
+        <h2 class="section-title" data-split>Tools<small>スキル・<wbr>使用ツール</small></h2>
+        <div class="tools">
+          <a class="tool reveal" href="works.html#processing" style="--d:0">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.999 0a12 12 0 100 24A12 12 0 0012 0zm1.183 5.255h.048c3.273 0 5.247 1.48 5.247 4.103 0 2.727-1.974 4.536-5.295 4.669v-1.742c1.837-.11 2.801-1.061 2.801-2.744 0-1.498-.957-2.442-2.8-2.516zm-1.773.026l.005 11.896c.779.052 1.583.18 2.26.337l-.269 1.324H6.788v-1.324a14.96 14.96 0 012.26-.337V6.993a14.71 14.71 0 01-2.26-.337V5.33h2.26c.64 0 1.469-.028 2.361-.05z"/></svg></span>
+            <span class="tool-name">Processing</span>
+            <span class="tool-cat">プログラミング</span>
+            <span class="tool-note">作品1・2</span>
+          </a>
+          <a class="tool reveal" href="work2.html" style="--d:1">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.087 6.146c-.3 0-.607.017-.907.069-2.532.367-4.23 2.239-5.18 3.674-.95-1.435-2.648-3.307-5.18-3.674a6.49 6.49 0 0 0-.907-.069C2.648 6.146 0 8.77 0 12s2.656 5.854 5.913 5.854c.3 0 .607-.017.916-.069 2.531-.376 4.23-2.247 5.18-3.683.949 1.436 2.647 3.307 5.18 3.683.299.043.607.069.915.069C21.344 17.854 24 15.23 24 12s-2.656-5.854-5.913-5.854zM6.53 15.734a3.837 3.837 0 0 1-.625.043c-2.148 0-3.889-1.7-3.889-3.777 0-2.085 1.749-3.777 3.898-3.777.208 0 .416.017.624.043 2.39.35 3.847 2.768 4.347 3.734-.508.974-1.974 3.384-4.355 3.734zm11.558.043c-.208 0-.416-.017-.624-.043-2.39-.35-3.856-2.768-4.347-3.734.491-.966 1.957-3.384 4.347-3.734.208-.026.416-.043.624-.043 2.149 0 3.89 1.7 3.89 3.777 0 2.085-1.75 3.777-3.89 3.777zm1.65-4.404v1.134h-1.205v1.182h-1.156v-1.182H16.17v-1.134h1.206V10.19h1.156v1.183h1.206zM4.246 12.498H7.82v-1.125H4.245v1.125z"/></svg></span>
+            <span class="tool-name">Arduino</span>
+            <span class="tool-cat">プログラミング</span>
+            <span class="tool-note">作品2</span>
+          </a>
+          <a class="tool reveal" href="works.html#unity" style="--d:2">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12.9288 4.2939 3.7997 2.1929c.1366.077.1415.2905 0 .3675l-4.515 2.6076a.4192.4192 0 0 1-.4246 0L7.274 6.8543c-.139-.0745-.1415-.293 0-.3675l3.7972-2.193V0L1.3758 5.5977V16.793l3.7177-2.1456v-4.3858c-.0025-.1565.1813-.2682.318-.1838l4.5148 2.6076a.4252.4252 0 0 1 .2136.3676v5.2127c.0025.1565-.1813.2682-.3179.1838l-3.7996-2.1929-3.7178 2.1457L12 24l9.6954-5.5977-3.7178-2.1457-3.7996 2.1929c-.1341.082-.3229-.0248-.3179-.1838V13.053c0-.1565.087-.2956.2136-.3676l4.5149-2.6076c.134-.082.3228.0224.3179.1838v4.3858l3.7177 2.1456V5.5977L12.9288 0Z"/></svg></span>
+            <span class="tool-name">Unity</span>
+            <span class="tool-cat">プログラミング</span>
+            <span class="tool-note">作品3・5</span>
+          </a>
+          <a class="tool reveal" href="work7.html" style="--d:3">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M10.5 9v6.2c0 1.2-.8 1.8-1.9 1.8-.7 0-1.3-.3-1.6-.8M17.2 10c-.4-.6-1-1-1.8-1-1 0-1.7.6-1.7 1.4 0 2 3.7 1.3 3.7 3.7 0 1-.9 1.9-2.1 1.9-1 0-1.8-.5-2.1-1.2"/></svg></span>
+            <span class="tool-name">JavaScript</span>
+            <span class="tool-cat">プログラミング</span>
+            <span class="tool-note">作品7・<wbr>作品の<wbr>Web版</span>
+          </a>
+          <a class="tool reveal" href="work10.html" style="--d:2"><span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 18L8 9l4 7 4-12 5 14M3 21h18"/></svg></span><span class="tool-name">MATLAB</span><span class="tool-cat">画像認識</span><span class="tool-note">作品10 / YOLOv4・HRNet</span></a>
+          <a class="tool reveal" href="work9.html" style="--d:0">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 8h20M6 5.5h1M9 5.5h1M9 12l-3 3 3 3M15 12l3 3-3 3"/></svg></span>
+            <span class="tool-name">TypeScript / React</span>
+            <span class="tool-cat">Webアプリ</span>
+            <span class="tool-note">Next.jsで地図アプリを制作（作品9）</span>
+          </a>
+          <a class="tool reveal" href="work8.html" style="--d:3">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg></span>
+            <span class="tool-name">Figma</span>
+            <span class="tool-cat">デザイン</span>
+            <span class="tool-note">アプリ UI の再現<wbr>（作品8）<wbr>・発表用の<wbr>ポスターや<wbr>スライド</span>
+          </a>
+          <a class="tool reveal" href="works.html#film" style="--d:0">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM6.962 7.68c.754 0 1.337.549 1.405 1.2.069.583-.171 1.097-.822 1.406-.343.171-.48.172-.549.069-.034-.069 0-.137.069-.206.617-.514.617-.926.548-1.508-.034-.378-.308-.618-.583-.618-1.2 0-2.914 2.674-2.674 4.629.103.754.549 1.646 1.509 1.646.308 0 .65-.103.96-.24.5-.264.799-.47 1.097-.8-.073-.885.704-2.046 1.851-2.046.515 0 .926.205.96.583.068.514-.377.582-.514.582s-.378-.034-.378-.17c-.034-.138.309-.07.275-.378-.035-.206-.24-.274-.446-.274-.72 0-1.131.994-1.029 1.611.035.275.172.549.447.549.205 0 .514-.31.617-.755.068-.308.343-.514.583-.514.102 0 .17.034.205.171v.138c-.034.137-.137.548-.102.651 0 .069.034.171.17.171.092 0 .436-.18.777-.459.117-.59.253-1.298.253-1.357.034-.24.137-.48.617-.48.103 0 .171.034.205.171v.138l-.136.617c.445-.583 1.097-.994 1.508-.994.172 0 .309.102.309.274 0 .103 0 .274-.069.446-.137.377-.309.96-.412 1.474 0 .137.035.274.207.274.171 0 .685-.206 1.096-.754l.007-.004c-.002-.068-.007-.134-.007-.202 0-.411.035-.754.104-.994.068-.274.411-.514.617-.514.103 0 .205.069.205.171 0 .035 0 .103-.034.137-.137.446-.24.857-.24 1.269 0 .24.034.582.102.788 0 .034.035.069.07.069.068 0 .548-.445.89-1.028-.308-.206-.48-.549-.48-.96 0-.72.446-1.097.858-1.097.343 0 .617.24.617.72 0 .308-.103.65-.274.96h.102a.77.77 0 0 0 .584-.24.293.293 0 0 1 .134-.117c.335-.425.83-.74 1.41-.74.48 0 .924.205.959.582.068.515-.378.618-.515.618l-.002-.002c-.138 0-.377-.035-.377-.172 0-.137.309-.068.274-.376-.034-.206-.24-.275-.446-.275-.686 0-1.13.891-1.028 1.611.034.275.171.583.445.583.206 0 .515-.308.652-.754.068-.274.343-.514.583-.514.103 0 .17.034.205.171 0 .069 0 .206-.137.652-.17.308-.171.48-.137.617.034.274.171.48.309.583.034.034.068.102.068.102 0 .069-.034.138-.137.138-.034 0-.068 0-.103-.035-.514-.205-.72-.548-.789-.891-.205.24-.445.377-.72.377-.445 0-.89-.411-.96-.926a1.609 1.609 0 0 1 .075-.649c-.203.13-.422.203-.623.203h-.17c-.447.652-.927 1.098-1.27 1.303a.896.896 0 0 1-.377.104c-.068 0-.171-.035-.205-.104-.095-.152-.156-.392-.193-.667-.481.527-1.145.805-1.453.805-.343 0-.548-.206-.582-.55v-.376c.102-.754.377-1.2.377-1.337a.074.074 0 0 0-.069-.07c-.24 0-1.028.824-1.166 1.373l-.103.445c-.068.309-.377.515-.582.515-.103 0-.172-.035-.206-.172v-.137l.046-.233c-.435.31-.87.508-1.075.508-.308 0-.48-.172-.514-.412-.206.274-.445.412-.754.412-.352 0-.696-.24-.862-.593-.244.275-.523.553-.852.764-.48.309-1.028.549-1.68.549-.582 0-1.097-.309-1.371-.583-.412-.377-.651-.96-.686-1.509-.205-1.68.823-3.84 2.4-4.8.378-.205.755-.343 1.132-.343zm9.77 3.291c-.104 0-.172.172-.172.343 0 .274.137.583.309.755a1.74 1.74 0 0 0 .102-.583c0-.343-.137-.515-.24-.515z"/></svg></span>
+            <span class="tool-name">Canva</span>
+            <span class="tool-cat">映像</span>
+            <span class="tool-note">映像編集<wbr>（作品4・6）</span>
+          </a>
+          <a class="tool reveal" href="work6.html" style="--d:1">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg></span>
+            <span class="tool-name">iPhone</span>
+            <span class="tool-cat">映像</span>
+            <span class="tool-note">シネマティックモードを<wbr>使った<wbr>撮影<wbr>（作品6）</span>
+          </a>
+          <div class="tool reveal" style="--d:2">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 8h18M10 8v3h4V8M12 11v2M6 18h12M9 18v-3h6v3"/></svg></span>
+            <span class="tool-name">3Dプリンタ</span>
+            <span class="tool-cat">もの<wbr>づくり</span>
+            <span class="tool-note">作品制作の<wbr>経験<wbr>（1作品）</span>
+          </div>
+          <div class="tool reveal" style="--d:3">
+            <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M12 5v6M10 11h4l-2 3z"/><path d="M5 17h14" stroke-dasharray="2 2"/></svg></span>
+            <span class="tool-name">レーザーカッター</span>
+            <span class="tool-cat">もの<wbr>づくり</span>
+            <span class="tool-note">作品制作の<wbr>経験<wbr>（1作品）</span>
+          </div>
+        </div>
+      </div>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <p class="eyebrow reveal">05 — Contact</p>
+        <h2 class="section-title" data-split>Contact<small>お問い合わせ</small></h2>
+        <p class="contact-lead reveal">作品の感想、制作やインターンのご相談、「一緒に何かつくりませんか」というお誘いまで。どんなことでも、お気軽にご連絡ください。</p>
+        <div class="contact-list">
+          <div class="contact-item reveal" data-mail data-user="ev250546" data-domain="meiji.ac.jp">
+            <span class="contact-k">Mail</span>
+            <a class="contact-v" data-mail-link href="#contact">ev250546 [at] meiji.ac.jp</a>
+            <button type="button" class="btn contact-copy" data-mail-copy hidden>アドレスをコピー</button>
+          </div>
+          <a class="contact-item reveal" href="https://github.com/Eisuke29" target="_blank" rel="noopener" style="--d:1">
+            <span class="contact-k">GitHub</span>
+            <span class="contact-v">@Eisuke29</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+  <script src="js/hero.js?v=20261101145932"></script>
+</body>
+</html>

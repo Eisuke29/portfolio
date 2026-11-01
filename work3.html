@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHROMATIC SHIFT | WORKS</title>
+  <meta name="description" content="背景色を切り替えて足場や箱を消しながら進む3Dパズルアクション">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work3.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 03 <span>/ 10</span></p>
+        <h1 data-split data-hero>CHROMATIC SHIFT</h1>
+        <p class="lead reveal" data-hero>背景色を<wbr>切り<wbr>替えて<wbr>足場や<wbr>箱を<wbr>消しながら<wbr>進む<wbr>3Dパズルアクション</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#play">▶ Web版で<wbr>遊ぶ</a>
+          <a class="btn" href="#slide">発表資料 ↓</a>
+          <a class="btn" href="#info">作品に<wbr>ついて<wbr> ↓</a>
+          <a class="btn" href="#how">ルールと世界観 ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/chromatic-shift" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ<wbr> ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+    <section class="detail-section" id="slide">
+      <h2 class="reveal">Presentation <small>発表資料</small></h2>
+      <figure class="slide-figure reveal">
+        <button type="button" class="zoomable" aria-label="拡大して見る：発表用の1枚スライド"><img src="images/work3_slide.jpg" alt="CHROMATIC SHIFTの発表スライド。タイトルと「背景色を切り替えることで、同じ色のオブジェクトを消しながら進む3Dパズルアクションゲーム」という説明"></button>
+        <figcaption>発表用の<wbr>1枚スライド</figcaption>
+      </figure>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">About <small>説明</small></h2>
+      <div class="prose about">
+        <p class="lead reveal">世界の<wbr>背景色を<wbr>3色の<wbr>中から<wbr>自由に<wbr>切り替えられる<wbr>3Dパズルアクションゲームです。</p>
+        <p class="reveal"><wbr>背景色と<wbr>同じ<wbr>色の<wbr>オブジェクトは<wbr>背景に<wbr>同化して<strong>消え</strong>、<wbr>違う<wbr>色の<wbr>オブジェクトや<wbr>障害物だけが<wbr>残ります。<wbr>プレイヤーは<wbr>背景色を<wbr>切り<wbr>替えながら、<wbr>三人称視点で<wbr>キャラクターを<wbr>操作して<wbr>ゴールを<wbr>目指します。</p>
+        <p class="reveal">ステージは<wbr>2つ<wbr>あり、<wbr>第1ステージは<wbr>足場を<wbr>渡っていく<strong>アスレチック</strong>、<wbr>第2ステージは<wbr>色の<wbr>仕組みを<wbr>使って<wbr>解く<strong>謎解き</strong>です。<wbr>「背景と<wbr>同じ<wbr>色は<wbr>消える」と<wbr>いう<wbr>ひとつの<wbr>ルールから、<wbr>アクションと<wbr>謎解きの<wbr>両方を<wbr>生み出せる<strong>ゲームの<wbr>多様性</strong>が、<wbr>この<wbr>作品で<wbr>いちばん<wbr>自信の<wbr>ある<wbr>ところです。</p>
+        <p class="reveal">アイデアの<wbr>起点は、<wbr>海外の<wbr>ゲーム<wbr>「HUE」です。</p>
+      </div>
+    </section>
+    <section class="detail-section" id="play">
+      <h2 class="reveal">Play <small>Web版で遊ぶ</small></h2>
+      <div class="play-card reveal">
+        <div>
+          <p class="play-lead">背景の色を変えて、ゴールを目指す</p>
+          <a class="play-cta" href="play/chromatic/index.html">
+            <span class="play-cta-icon" aria-hidden="true">▶</span>
+            <span class="play-cta-text"><b>今すぐ遊ぶ</b><small>ブラウザで開きます・インストール不要</small></span>
+          </a>
+          <ul class="play-req"><li><span>端末</span>PC</li><li><span>操作</span>キーボード＋マウス</li><li><span>読み込み</span>約40MB</li></ul>
+          <p class="play-sub"><a class="how-link" href="#how">ルールは下の「ルールと世界観」へ ↓</a></p>
+        </div>
+        <figure class="tutorial-video">
+          <video src="play/chromatic/tutorial.mp4?v=20261101145932" poster="play/chromatic/tutorial.jpg?v=20261101145932" controls playsinline preload="none"></video>
+          <figcaption>遊び方（40秒）</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="how">
+      <h2 class="reveal">Rule <small>ルールと世界観</small></h2>
+      <div class="dg reveal" data-dg>
+        <div class="dg-tabs" role="tablist" aria-label="図の切り替え">
+          <button type="button" role="tab" aria-selected="true" aria-controls="dg-a"><small>RULE</small>同じ色は消える</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="dg-b"><small>RUN</small>走り抜けてみる</button>
+        </div>
+        <div class="dg-pane" id="dg-a" role="tabpanel">
+          <div class="dg-grid">
+            <div class="dg-stage" data-demo="chromatic-rule"></div>
+            <div class="dg-side">
+              <h3>背景と同じ色は、消えてすり抜ける</h3>
+              <p class="dg-hint">背景の色を選ぶ</p>
+              <div class="dg-ctrl" data-role="colors" aria-label="背景色">
+                <button type="button" class="dg-btn" data-color="red" aria-pressed="false">赤</button>
+                <button type="button" class="dg-btn" data-color="blue" aria-pressed="false">青</button>
+                <button type="button" class="dg-btn" data-color="yellow" aria-pressed="true">黄</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dg-pane" id="dg-b" role="tabpanel" hidden>
+          <div class="dg-grid">
+            <div class="dg-stage" data-demo="chromatic-run"></div>
+            <div class="dg-side">
+              <h3>同じ色のブロックは、すり抜けられる</h3>
+              <p class="dg-hint">背景の色を選んで走らせる（走っている間も変えられる）</p>
+              <div class="dg-ctrl" data-role="colors" aria-label="背景色">
+                <button type="button" class="dg-btn" data-color="red" aria-pressed="true">赤</button>
+                <button type="button" class="dg-btn" data-color="blue" aria-pressed="false">青</button>
+                <button type="button" class="dg-btn" data-color="yellow" aria-pressed="false">黄</button>
+                <button type="button" class="dg-btn is-main" data-role="run">▶ 走らせる</button>
+              </div>
+              <dl class="dg-readout"><div><dt>背景色</dt><dd data-out="bg">赤</dd></div><div><dt>結果</dt><dd data-out="state">—</dd></div></dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Screenshots <small>スクリーンショット</small></h2>
+      <div class="gallery">
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：背景色が青のとき：ピンクの床の上に立っている"><img src="images/work3.jpg" alt="CHROMATIC SHIFTの実行画面。青い背景の中、ピンクの床の上にキャラクターが立っている" loading="lazy"></button>
+          <figcaption>背景色が<wbr>青の<wbr>とき：ピンクの<wbr>床の<wbr>上に<wbr>立っている</figcaption>
+        </figure>
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：背景色を赤に切り替えた後：足元の床が消えている"><img src="images/work3_shift.jpg" alt="背景色を赤に切り替えた後の画面。床が消え、赤い背景だけになっている" loading="lazy"></button>
+          <figcaption>背景色を<wbr>赤に<wbr>切り替えた<wbr>後：足元の<wbr>床が<wbr>消えている</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="info">
+      <h2 class="reveal">Information <small>作品情報</small></h2>
+      <dl class="meta-grid reveal">
+        <div><dt>動作環境</dt><dd>Windows / Unity 6.4（6000.4.11f1）</dd></div>
+        <div><dt>公表日</dt><dd>2026年6月23日<wbr>（2年次 仮配属ゼミ 渡邊研究室 スキルアップゼミ Unity回）</dd></div>
+        <div><dt>制作形態</dt><dd>個人制作</dd></div>
+      </dl>
+    </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work2.html"><small>← Prev / 02</small><b>チャンバラ <span class="nw">-RING OUT-</span></b></a>
+      <a href="work4.html"><small>Next / 04 →</small><b>DriftWalk Theater</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>エレベーター | WORKS</title>
+  <meta name="description" content="作業を終えた主人公が、帰るためにエレベーターへ向かう。何気ない日常の中に違和感が入り込む短編ホラー。">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work6.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 06 <span>/ 10</span></p>
+        <h1 data-split data-hero>エレベーター</h1>
+        <p class="lead reveal" data-hero>作業を<wbr>終えた<wbr>主人公が、<wbr>帰る<wbr>ために<wbr>エレベーターへ<wbr>向かう。<wbr>何気ない<wbr>日常の<wbr>中に<wbr>違和感が<wbr>入り込む短編ホラー。</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#movie">映像を<wbr>見る<wbr> ↓</a>
+          
+          <a class="btn" href="#info">作品に<wbr>ついて<wbr> ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/elevator" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ<wbr> ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+    <section class="detail-section" id="movie">
+      <h2 class="reveal">Film <small>映像</small></h2>
+      <figure class="media-figure reveal">
+        <div class="player">
+          <video src="images/work6.mp4" poster="images/work6_title.jpg" controls playsinline preload="metadata">お使いの<wbr>ブラウザで<wbr>は<wbr>動画を<wbr>再生できません。</video>
+        </div>
+        <figcaption>作品本編<wbr>（約45秒・音声あり）</figcaption>
+      </figure>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">About <small>説明</small></h2>
+      <div class="prose about">
+        <p class="lead reveal">エレベーターを<wbr>舞台に、<wbr>いつもの<wbr>帰宅に<wbr>少しずつ違和感が<wbr>入り込んでいく、<wbr>短編ホラー映像です。</p>
+        <p class="reveal">特に<wbr>意識したのは、<wbr>ピントが<wbr>合っている<wbr>対象と<wbr>周辺の<wbr>ボケの<wbr>差に<wbr>よる<strong>サリエンシー<wbr>（視覚的な<wbr>目立ちやすさ）</strong>です。<wbr>エレベーターの<wbr>ボタンや<wbr>階数表示、<wbr>背後から<wbr>現れる<wbr>手など、<wbr>物語上重要な<wbr>対象に<wbr>ピントを<wbr>合わせて<wbr>背景を<wbr>やや<wbr>ぼかす<wbr>ことで、<wbr>観客の<wbr>注意が<wbr>自然に<wbr>必要な<wbr>情報へ<wbr>向かうようにしました。<wbr>撮影には<wbr>iPhoneの<wbr>シネマティックモードを<wbr>使い、<wbr>画面上で<wbr>対象を<wbr>選びながら<wbr>見せたい<wbr>部分を<wbr>強調しています。<wbr>主人公が<wbr>エレベーターへ<wbr>向かう<wbr>場面では<wbr>パンを<wbr>使い、<wbr>作業を<wbr>終えた<wbr>日常の<wbr>空間から、<wbr>エレベーターと<wbr>いう<wbr>閉じた<wbr>空間へ<wbr>移っていく<wbr>流れを<wbr>作りました。</p>
+        <p class="reveal">後半は、<wbr>エレベーターに<wbr>乗って<wbr>1階へ<wbr>向かうと<wbr>いう<wbr>予測しやすい<wbr>流れを<wbr>作ったうえで、<wbr>背後や<wbr>下から<wbr>手が<wbr>出てくる<wbr>展開を<wbr>置き、<strong>観客の<wbr>予測を<wbr>意図的に<wbr>裏切る<wbr>構成</strong>に<wbr>しました。<wbr>主人公が<wbr>背後の<wbr>気配に<wbr>振り<wbr>返った<wbr>後は、<wbr>カメラも<wbr>その<wbr>視線に<wbr>近い<wbr>位置から<wbr>映す<wbr>ことで、<wbr>観客の<wbr>「背後を<wbr>確認したい」と<wbr>いう<wbr>気持ちに<wbr>沿った<wbr>カメラワークに<wbr>しています。<wbr>最後に<wbr>ドアが<wbr>開く<wbr>場面でも、<wbr>一度<wbr>何も<wbr>起きないように<wbr>見せてから<wbr>手を<wbr>出し、<wbr>安心しかけた<wbr>瞬間の<wbr>驚きを<wbr>狙いました。<wbr>音も、<wbr>怖さを<wbr>強めたい<wbr>場面ではあえて<wbr>抑え、<wbr>手が<wbr>出る<wbr>瞬間に<wbr>強い音を<wbr>入れる<wbr>ことで、<wbr>緊張と<wbr>驚きの<wbr>差が<wbr>大きくなるように<wbr>しています。</p>
+        <p class="reveal">振り返ると、<wbr>前半の<wbr>移動場面に<wbr>時間を<wbr>使いすぎて<wbr>不穏さを<wbr>積み上げきれず、<wbr>怖さが<wbr>後半に<wbr>集中してしまった<wbr>点が<wbr>課題です。<wbr>次に<wbr>制作する<wbr>ときは、<wbr>移動場面にも<wbr>音や<wbr>明暗の<wbr>変化を<wbr>加え、<wbr>視点の<wbr>切り<wbr>替えにもより<wbr>明確な<wbr>意図を<wbr>持たせたいと<wbr>考えています。</p>
+      </div>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Screenshots <small>スクリーンショット</small></h2>
+      <div class="gallery">
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：作品の一場面：ボタンを寄りで映し、主人公が向かう階を観客に示すカット"><img src="images/work6.jpg" alt="映像作品「エレベーター」の一場面。エレベーターの階数ボタンを指で押している" loading="lazy"></button>
+          <figcaption>作品の<wbr>一場面：ボタンを<wbr>寄りで<wbr>映し、<wbr>主人公が<wbr>向かう<wbr>階を<wbr>観客に<wbr>示すカット</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="info">
+      <h2 class="reveal">Information <small>作品情報</small></h2>
+      <dl class="meta-grid reveal">
+        <div><dt>動作環境</dt><dd>映像作品<wbr>（MP4・約45秒）<wbr> / 撮影：iPhone 17<wbr>（シネマティックモード）<wbr> / 編集：Canva Pro</dd></div>
+        <div><dt>公表日</dt><dd>2026年6月15日<wbr>（上映公開。<wbr>課題提出は<wbr>2026年6月13日）</dd></div>
+        <div><dt>授業</dt><dd>2年次 春学期<wbr>「映像アニメーション表現」<wbr>課題</dd></div>
+        <div><dt>制作形態</dt><dd>個人制作</dd></div>
+      </dl>
+    </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work5.html"><small>← Prev / 05</small><b>UNSPOKEN</b></a>
+      <a href="work7.html"><small>Next / 07 →</small><b>みんなの組体操</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

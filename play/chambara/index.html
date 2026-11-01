@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>チャンバラ -RING OUT- | Web版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap">
+  <style>
+    :root {
+      --red: #c33;
+      --blue: #3d8bff;
+      --fg: #f2f2f2;
+      --muted: #9a9a9a;
+      --accent: #6fa8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #0a0a0a;
+      color: var(--fg);
+      font-family: "Noto Sans JP", system-ui, sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: none;
+      overscroll-behavior: none;
+    }
+
+    /* 3D の世界：画面の対角線の大きさの正方形を、真ん中で回す */
+    #world {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+    }
+
+    #world canvas {
+      display: block;
+    }
+
+    .layer {
+      position: fixed;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+      text-align: center;
+    }
+
+    body[data-state="home"] #home,
+    body[data-state="ready"] #ready,
+    body[data-state="playing"] #hud,
+    body[data-state="countdown"] #hud,
+    body[data-state="gameover"] #hud {
+      display: flex;
+    }
+
+    #home,
+    #ready {
+      background: rgba(8, 8, 8, 0.9);
+      z-index: 5;
+    }
+
+    #home img {
+      width: min(70vw, 320px);
+    }
+
+    #home,
+    #ready {
+      justify-content: safe center;
+      touch-action: pan-y;
+      overflow-y: auto;
+      gap: 14px;
+    }
+
+    .btn {
+      min-width: 220px;
+      padding: 16px 28px;
+      border: 1px solid #fff;
+      border-radius: 14px;
+      background: #282828;
+      color: #fff;
+      font: inherit;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .btn:active {
+      background: #555;
+    }
+
+    .note {
+      max-width: 26em;
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border: 1px solid #555;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--fg);
+      font: inherit;
+      font-size: 0.85rem;
+    }
+
+    .chip[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+
+    /* 傾きの確認メーター */
+    .meter {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 1px solid #444;
+    }
+
+    .meter i {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      width: 8px;
+      height: 64px;
+      margin-left: -4px;
+      border-radius: 4px;
+      background: var(--red);
+      transform-origin: 50% 100%;
+      transition: transform 0.15s;
+    }
+
+    #meterSwing {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      opacity: 0;
+    }
+
+    #meterSwing.on {
+      animation: swing 0.5s ease-out;
+    }
+
+    @keyframes swing {
+      from { opacity: 1; transform: scale(0.9); }
+      to { opacity: 0; transform: scale(1.3); }
+    }
+
+    #meterVal {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    #sensorMsg {
+      color: #ff8a8a;
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    /* 試合中の表示（画面に対してまっすぐ。世界だけが回る） */
+    #hud {
+      justify-content: flex-start;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    #hud .score {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: #ddd;
+    }
+
+    #dots {
+      display: flex;
+      gap: 10px;
+      margin-top: -10px;
+    }
+
+    #dots span {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #5a5a5a;
+    }
+
+    #dots span[data-w="1"] { background: #ff6464; }
+    #dots span[data-w="2"] { background: #50a0ff; }
+
+    #big {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      font-size: 4.4rem;
+      font-weight: 900;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    #result {
+      position: fixed;
+      top: 32%;
+      left: 0;
+      right: 0;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffc850;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+    }
+
+    #resultSub {
+      position: fixed;
+      top: calc(32% + 52px);
+      left: 0;
+      right: 0;
+      color: #ddd;
+    }
+
+    #btnHome {
+      position: fixed;
+      bottom: 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: auto;
+    }
+
+    .flash {
+      position: fixed;
+      top: 22%;
+      left: 0;
+      right: 0;
+      font-size: 1.6rem;
+      font-weight: 900;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .flash.show { opacity: 1; }
+    .flash.me.big, .flash.me.small, .flash.cpu.block { color: #ffd75e; }
+    .flash.cpu.big, .flash.cpu.small, .flash.me.block { color: #8fc0ff; }
+
+    /* 土俵の地図：右上（左上の「見え方」ボタンと対になる位置） */
+    .map {
+      position: fixed;
+      right: 12px;
+      top: max(12px, env(safe-area-inset-top));
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #ddd;
+      overflow: hidden;
+    }
+
+    .map i {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      margin: -7px 0 0 -7px;
+      border-radius: 50%;
+    }
+
+    #mapMe { background: #98192a; box-shadow: 0 0 0 2px #ff8a8a; }
+    #mapCpu { background: #0e3a71; box-shadow: 0 0 0 2px #8fc0ff; }
+
+    /* 斬るボタン：押したあと、輪が一周するまで次は斬れない（連打防止） */
+    #slash {
+      position: fixed;
+      left: 50%;
+      bottom: max(28px, calc(env(safe-area-inset-bottom) + 16px));
+      width: 112px;
+      height: 112px;
+      margin-left: -56px;
+      border: 0;
+      border-radius: 50%;
+      background: conic-gradient(#ffd75e calc(var(--ready, 1) * 360deg), rgba(255, 255, 255, 0.15) 0);
+      color: #111;
+      font: inherit;
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      pointer-events: auto;
+      touch-action: manipulation;
+      display: none;
+      z-index: 4;
+    }
+
+    #slash span {
+      position: absolute;
+      inset: 6px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #1b1b1b;
+      color: #ffd75e;
+    }
+
+    #slash.ready span {
+      background: #ffd75e;
+      color: #111;
+    }
+
+    #slash:active span { transform: scale(0.94); }
+
+    body[data-state="playing"][data-input="button"] #slash,
+    body[data-state="countdown"][data-input="button"] #slash {
+      display: block;
+    }
+
+    /* 画面の見え方の切り替え（試合中にも比べられる） */
+    #viewToggle {
+      position: fixed;
+      left: 12px;
+      top: max(12px, env(safe-area-inset-top));
+      pointer-events: auto;
+      z-index: 4;
+      font-size: 0.75rem;
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .setting {
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+    }
+
+    .setting > span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* 遊び方（タイトル画面） */
+    .howto3 {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      width: min(92vw, 380px);
+      text-align: left;
+    }
+
+    .howto3 li {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      column-gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px solid #333;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .howto3 .ico {
+      grid-row: span 2;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .howto3 b {
+      color: var(--fg);
+      font-size: 0.95rem;
+    }
+
+    .rule {
+      display: grid;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .rule b {
+      color: var(--fg);
+    }
+
+    .rule i {
+      display: inline-block;
+      position: relative;
+      width: 26px;
+      height: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* 2本の剣の角度の関係を、線2本で表す */
+    .rule i::before,
+    .rule i::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 3px;
+      height: 18px;
+      margin-left: -1.5px;
+      border-radius: 2px;
+    }
+
+    .rule i::before { background: var(--blue); }
+    .rule i::after { background: #ff6464; }
+    .rule .r0::before { transform: translateX(-4px); }
+    .rule .r0::after { transform: translateX(4px); }
+    .rule .r45::after { transform: rotate(45deg); }
+    .rule .r90::after { transform: rotate(90deg); }
+
+    /* 試合中のアドバイス：今斬るとどうなるか */
+    .advice {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: max(160px, calc(env(safe-area-inset-bottom) + 150px));
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    .advice span {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .advice[data-k="0"] span { color: #ffd75e; }
+    .advice[data-k="45"] span { color: #fff; }
+    .advice[data-k="90"] span { color: #8fc0ff; }
+
+    /* PC で開いたとき */
+    #pc {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: #0a0a0a;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    body.pc #pc {
+      display: flex;
+    }
+
+    #pc code {
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: #1c1c1c;
+      word-break: break-all;
+    }
+    a.chip { text-decoration: none; }
+  </style>
+</head>
+<body data-state="home" data-input="button">
+  <div id="world"></div>
+
+  <!-- タイトル -->
+  <section class="layer" id="home">
+    <a href="../../work2.html" style="color:var(--muted);font-size:.85rem">← 作品ページへ</a>
+    <img src="img/logo.png" alt="チャンバラ -RING OUT-">
+    <ol class="howto3">
+      <li><span class="ico">📱</span><b>縦に持つ</b>スマホを剣の柄のように、縦に握ります</li>
+      <li><span class="ico">↔</span><b>傾けて構える</b>左右に傾けると、剣の角度（縦・斜め・横）が変わります</li>
+      <li><span class="ico">⚔</span><b>ボタンで斬る</b>画面下の「斬る」ボタンで斬ります。一度斬ると、輪が一周するまで次は斬れません（前に振って斬る方式にも切り替えられます）</li>
+    </ol>
+    <div class="rule">
+      <span><i class="r0"></i>相手の剣と<b>平行</b>に斬る → 大きく押す</span>
+      <span><i class="r45"></i><b>斜め</b>に交わる → 少し押す</span>
+      <span><i class="r90"></i><b>直角</b>に交わる → 防がれて押し返される</span>
+    </div>
+    <p class="note">相手を土俵の外へ押し出すと1本。先に2本取った方の勝ち。音が出ます。</p>
+    <button type="button" class="btn" id="btnStart">START</button>
+    <a class="chip" href="tutorial.mp4" target="_blank" rel="noopener">▶ 遊び方の動画を見る（42秒）</a>
+    <p class="note">この Web 版は、スマホ1台で楽しめるように作り変えたものです。本来の作品は、Arduino と6軸センサで作った剣型コントローラーを PC につなぎ、PC どうしをサーバーで連携させて2人で対戦するゲームです。</p>
+  </section>
+
+  <!-- 準備 -->
+  <section class="layer" id="ready">
+    <a href="../../work2.html" style="color:var(--muted);font-size:.85rem">← 作品ページへ</a>
+    <h2>準備：センサーの確認</h2>
+    <p class="note">① 画面の向きを縦に固定します（回転ロックをオン）。<br>② スマホを縦に持ち、左右に傾けて、下の赤い剣が同じ向きに動くか確かめます。逆に動くときは「傾きの左右を反転」を押します。</p>
+    <div class="meter" aria-hidden="true"><i id="meterSword"></i><span id="meterSwing"></span></div>
+    <p id="meterVal">0° → U</p>
+    <p id="sensorMsg"></p>
+    <div class="row">
+      <button type="button" class="chip" id="btnFlip" aria-pressed="false">傾きの左右を反転</button>
+    </div>
+    <div class="setting">
+      <span>斬り方</span>
+      <div class="row" role="group" aria-label="斬り方">
+        <button type="button" class="chip" data-input="button" aria-pressed="true">ボタンで斬る</button>
+        <button type="button" class="chip" data-input="swing" aria-pressed="false">スマホを振って斬る</button>
+      </div>
+    </div>
+    <div class="setting">
+      <span>画面の見え方（試合中も左上で切り替えられます）</span>
+      <div class="row" role="group" aria-label="画面の見え方">
+        <button type="button" class="chip" data-view="level" aria-pressed="true">世界をまっすぐ保つ</button>
+        <button type="button" class="chip" data-view="sword" aria-pressed="false">剣だけ傾く</button>
+      </div>
+    </div>
+    <div class="row" role="group" aria-label="相手の強さ">
+      <button type="button" class="chip" data-level="easy" aria-pressed="false">やさしい</button>
+      <button type="button" class="chip" data-level="normal" aria-pressed="true">ふつう</button>
+      <button type="button" class="chip" data-level="hard" aria-pressed="false">つよい</button>
+    </div>
+    <button type="button" class="btn" id="btnReady">READY</button>
+    <p class="note">「世界をまっすぐ保つ」：スマホを傾けても、画面の中の土俵は地面に対して水平のまま見えます。<br>「剣だけ傾く」：画面は回さず、あなたの剣だけがスマホの傾きに合わせて傾きます。<br>構えが相手の剣と平行なほど大きく押し出せ、直角に交わると防がれます。</p>
+  </section>
+
+  <!-- 試合中 -->
+  <section class="layer" id="hud" aria-live="polite">
+    <span class="score">SCORE</span>
+    <div id="dots"><span></span><span></span><span></span></div>
+    <div id="big"></div>
+    <div class="flash" id="flash"></div>
+    <div class="advice" id="advice"><span id="adviceText"></span></div>
+    <div id="result"></div>
+    <div id="resultSub"></div>
+    <button type="button" class="btn" id="btnHome" hidden>もう一度</button>
+    <div class="map" aria-hidden="true"><i id="mapCpu"></i><i id="mapMe"></i></div>
+    <button type="button" class="chip" id="viewToggle">世界まっすぐ</button>
+    <button type="button" id="slash" aria-label="斬る"><span>斬る</span></button>
+  </section>
+
+  <!-- PC -->
+  <section id="pc">
+    <a href="../../work2.html" style="color:var(--muted)">← 作品ページへ</a>
+    <h2>スマホで開いてください</h2>
+    <a class="chip" href="tutorial.mp4" target="_blank" rel="noopener">▶ 遊び方の動画を見る（42秒）</a>
+    <p class="note">このゲームは、スマホの傾きと振りを使って遊びます。スマホのブラウザで、次のアドレスを開いてください。</p>
+    <code id="pcUrl"></code>
+  </section>
+
+  <script>
+    document.getElementById("pcUrl").textContent = location.href.split("?")[0];
+  </script>
+  <script src="../lib/p5.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

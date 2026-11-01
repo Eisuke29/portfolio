@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>チャンバラ -RING OUT- | WORKS</title>
+  <meta name="description" content="自作の剣型コントローラーで戦う2人対戦チャンバラゲーム">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work2.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 02 <span>/ 10</span></p>
+        <h1 data-split data-hero>チャンバラ <span class="nw">-RING OUT-</span></h1>
+        <p class="lead reveal" data-hero>自作の<wbr>剣型コントローラーで<wbr>戦う<wbr>2人対戦チャンバラゲーム</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#play">▶ Web版（スマホ）で<wbr>遊ぶ</a>
+          <a class="btn" href="#slide">発表資料 ↓</a>
+          <a class="btn" href="#info">作品に<wbr>ついて<wbr> ↓</a>
+          <a class="btn" href="#how">仕組み ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/chambara-ring-out" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ<wbr> ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+    <section class="detail-section" id="slide">
+      <h2 class="reveal">Presentation <small>発表資料</small></h2>
+      <figure class="slide-figure reveal">
+        <button type="button" class="zoomable" aria-label="拡大して見る：発表会のプレゼンボード（メンバー名はぼかしています）"><img src="images/work2_board.jpg" alt="チャンバラ -RING OUT- のプレゼンボード。ロゴとキャッチコピー「斬るか斬られるか、その手で決めろ。」、コントローラーとゲーム画面の写真"></button>
+        <figcaption>発表会の<wbr>プレゼンボード<wbr>（メンバー名は<wbr>ぼかしています）</figcaption>
+      </figure>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">About <small>説明</small></h2>
+      <div class="prose about">
+        <p class="lead reveal">Arduinoと<wbr>6軸センサで<wbr>作った<strong>自作コントローラー</strong>を<wbr>剣のように<wbr>構えて<wbr>戦う、<wbr>2人対戦の<wbr>体感型チャンバラゲームです。</p>
+        <p class="reveal"><wbr>剣を<wbr>構える<wbr>向きと<wbr>振る<wbr>タイミングで<wbr>攻防が<wbr>決まり、<wbr>相手を<wbr>リングの<wbr>外へ<wbr>押し出した<wbr>方が<wbr>ラウンドの<wbr>勝者に<wbr>なります<wbr>（3ラウンド制・2本先取）。</p>
+        <p class="reveal">剣の<wbr>角度は<wbr>180度の<wbr>範囲を<wbr>5段階に<wbr>分けて<wbr>判定します。<wbr>構えが<wbr>垂直に<wbr>交わると<wbr>防御成功、<wbr>平行に<wbr>近いほど<wbr>相手を<wbr>大きく<wbr>押し出せると<wbr>いう<wbr>ルールに<wbr>した<wbr>ことで、<wbr>やみくもに<wbr>振るのではなく、<wbr><strong>相手の<wbr>構えを<wbr>読む<wbr>駆け引き</strong>が<wbr>生まれるようにしました。<wbr>対戦は<wbr>ネットワークで<wbr>つながった<wbr>端末どうしで<wbr>行い、<wbr>勝敗の<wbr>判定を<wbr>サーバーに<wbr>集約して<wbr>結果を<wbr>同期しています。</p>
+        <p class="reveal">4人チームで<wbr>制作し、<wbr>私は<wbr>作品の<wbr>構想の<wbr>とりまとめと、<wbr>コントローラーからの<wbr>入力・Processingへの<wbr>通信、<wbr>デバイス・入力制御を<wbr>担当しました。<wbr>センサーの<wbr>角度が<wbr>段階の<wbr>境目で<wbr>細かく<wbr>揺れると<wbr>構えの<wbr>向きが<wbr>行ったり<wbr>来たりしてしまう<wbr>ため、<wbr>段階を<wbr>切り<wbr>替える<wbr>ときの<wbr>閾値に<wbr>行きと<wbr>帰りで<wbr>差を<wbr>つけ、<wbr>操作が<wbr>安定する<wbr>よう<wbr>工夫しました。<wbr>発表会では<wbr>学生投票で<strong>1位</strong>を<wbr>いただきました。</p>
+      </div>
+    </section>
+    <section class="detail-section" id="play">
+      <h2 class="reveal">Play <small>Web版で遊ぶ</small></h2>
+      <div class="play-card reveal">
+        <div>
+          <p class="play-lead">スマホを剣にして、コンピューターと対戦</p>
+          <p class="play-origin ap"><b>Web版について</b>このWeb版は、スマホ1台で楽しめるように作り変えたものです。本来の作品は、自作の剣型コントローラー（Arduino＋6軸センサ）を<b>PCにつなぎ、PCどうしをサーバーで連携させて2人で対戦</b>するゲームです。</p>
+          <a class="play-cta" href="play/chambara/index.html">
+            <span class="play-cta-icon" aria-hidden="true">▶</span>
+            <span class="play-cta-text"><b>今すぐ遊ぶ</b><small>ブラウザで開きます・インストール不要</small></span>
+          </a>
+          <ul class="play-req"><li><span>端末</span>スマホ</li><li><span>操作</span>傾ける・タップ</li><li><span>相手</span>コンピューター</li><li><span>音</span>あり</li></ul>
+          <p class="play-note-pc">PCで見ている場合は、このページをスマホで開いてください。</p>
+          <p class="play-sub"><a class="how-link" href="#how">ルールは下の「仕組み」へ ↓</a></p>
+          <p class="credit">効果音：効果音ラボ</p>
+        </div>
+        <figure class="tutorial-video">
+          <video src="play/chambara/tutorial.mp4?v=20261101145932" poster="play/chambara/tutorial.jpg?v=20261101145932" controls playsinline preload="none"></video>
+          <figcaption>遊び方（42秒）</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="how">
+      <h2 class="reveal">How <small>仕組み</small></h2>
+      <div class="dg reveal" data-dg>
+        <div class="dg-tabs" role="tablist" aria-label="図の切り替え">
+          <button type="button" role="tab" aria-selected="true" aria-controls="dg-a"><small>RULE</small>角度と押し出し</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="dg-b"><small>TUNING</small>ゆれを抑える</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="dg-c"><small>SYSTEM</small>システム構成</button>
+        </div>
+        <div class="dg-pane" id="dg-a" role="tabpanel">
+          <div class="dg-grid">
+            <div class="dg-stage" data-demo="chambara-angle"></div>
+            <div class="dg-side">
+              <h3>同じ向きなら強く、直角なら防御</h3>
+              <p class="dg-hint">自分と相手の構えを選ぶ</p>
+              <div class="dg-ctrl stage-btns" data-role="me" aria-label="自分の構え"></div>
+              <div class="dg-ctrl stage-btns" data-role="cpu" aria-label="相手の構え"></div>
+            </div>
+          </div>
+        </div>
+        <div class="dg-pane" id="dg-b" role="tabpanel" hidden>
+          <div class="dg-grid">
+            <div class="dg-stage" data-demo="chambara-hysteresis"></div>
+            <div class="dg-side">
+              <h3>境目で行ったり来たりしない</h3>
+              <p class="dg-hint">切り替えて、切り替わりの回数を比べる</p>
+              <div class="dg-ctrl"><button type="button" class="dg-btn" data-role="hys" aria-pressed="true">行きと帰りで差をつける：ON</button></div>
+              <dl class="dg-readout"><div><dt>切り替わり回数</dt><dd data-out="flips">0</dd></div><div><dt>今の構え</dt><dd data-out="stage">—</dd></div></dl>
+            </div>
+          </div>
+        </div>
+        <div class="dg-pane" id="dg-c" role="tabpanel" hidden>
+          <div class="dg-grid">
+            <div class="dg-stage" data-flow="chambara"></div>
+            <div class="dg-side">
+              <h3>剣 → PC → サーバーで判定</h3>
+              <p class="dg-hint">四角を押すと説明</p>
+              <div class="flow-detail" data-role="detail"><span class="k">SELECT</span><p>四角を押す</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Film <small>紹<wbr>介動画</small></h2>
+      <figure class="media-figure reveal">
+        <div class="player">
+          <button type="button" class="yt-facade" data-id="G2Pwdo5EZ7o" data-title="チャンバラ -RING OUT- 紹介動画" style="background-image:url(images/work2_youtube.jpg)" aria-label="紹介動画を再生（YouTube）">
+            <span class="play-icon"></span>
+            <span class="note">押すと<wbr> YouTube の<wbr>動画を<wbr>読み込みます</span>
+          </button>
+        </div>
+        <figcaption>紹<wbr>介動画<wbr>（YouTube）</figcaption>
+      </figure>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Screenshots <small>スクリーンショット</small></h2>
+      <div class="gallery">
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：タイトル画面"><img src="images/work2.jpg" alt="チャンバラ -RING OUT- のタイトル画面" loading="lazy"></button>
+          <figcaption>タイトル画面</figcaption>
+        </figure>
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：対戦画面：上部にスコア、右下に位置関係を示すミニマップ"><img src="images/work2_play.jpg" alt="チャンバラ -RING OUT- の対戦画面。中央に剣を構えたキャラクター、右下にミニマップ" loading="lazy"></button>
+          <figcaption>対戦画面：上部に<wbr>スコア、<wbr>右下に<wbr>位置関係を<wbr>示すミニマップ</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="info">
+      <h2 class="reveal">Information <small>作品情報</small></h2>
+      <dl class="meta-grid reveal">
+        <div><dt>動作環境</dt><dd>Windows 10/11 / Processing 4<wbr>（net・serial・soundライブラリ）<wbr> / Arduino Uno ＋ 6軸センサ<wbr>（MPU-6050）<wbr> / PC 2〜3台</dd></div>
+        <div><dt>公表日</dt><dd>2026年1月19日<wbr>（<wbr>プログラミング演習Ⅱ 最終制作課題 発表会）</dd></div>
+        <div><dt>制作形態</dt><dd>4人チームに<wbr>よる<wbr>制作<wbr>（構想の<wbr>とりまとめ、<wbr>Arduinoからの<wbr>入力・Processingへの<wbr>通信、<wbr>デバイス・入力制御を<wbr>担当）</dd></div>
+      </dl>
+    </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work1.html"><small>← Prev / 01</small><b>ScrumCanvas</b></a>
+      <a href="work3.html"><small>Next / 03 →</small><b>CHROMATIC SHIFT</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

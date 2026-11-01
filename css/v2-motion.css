@@ -1,0 +1,127 @@
+/* =========================================================
+   v2 の動き（上品さを保ったまま、動きを足す）
+   ・どれも「画面に入ったとき一度だけ」か「さわったとき」に動く。ずっと動き続けるものは足さない
+   ・ゆっくり始まって、すっと止まる同じ曲線（--ease）でそろえる
+   ・「動きを減らす」設定の人には、すべて止める（いちばん下）
+   ========================================================= */
+
+:root {
+  --m-slow: 1.2s;
+  --m-mid: 0.8s;
+}
+
+/* ---------- 1. 画像・動画：下から幕が上がるように現れる（少し拡大した状態から戻る） ---------- */
+.js-ready .m-mask { overflow: hidden; }
+.js-ready .m-mask > img,
+.js-ready .m-mask > video,
+.js-ready .m-mask > .yt-facade {
+  clip-path: inset(100% 0 0 0);
+  transform: scale(1.12);
+  transition: clip-path var(--m-slow) var(--ease), transform calc(var(--m-slow) * 1.4) var(--ease);
+}
+.js-ready .m-mask.m-in > img,
+.js-ready .m-mask.m-in > video,
+.js-ready .m-mask.m-in > .yt-facade {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+/* 拡大できる画像は、マウスを重ねると少し寄る */
+.zoomable { overflow: hidden; }
+.zoomable img { transition: transform 0.9s var(--ease), filter 0.9s var(--ease), clip-path var(--m-slow) var(--ease); }
+.zoomable:hover img { transform: scale(1.035); filter: brightness(1.06); }
+
+/* ---------- 2. 見出し：区画番号が流れて、下に細い線が引かれる ---------- */
+.detail-section > h2::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1px;
+  margin-top: 18px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: width var(--m-slow) var(--ease) 0.2s;
+}
+.detail-section.m-in > h2::after { width: min(160px, 100%); }
+.js-ready .detail-section > h2::before {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s steps(12, end) 0.1s;
+}
+.js-ready .detail-section.m-in > h2::before { clip-path: inset(0 0 0 0); }
+
+/* ---------- 3. 中身を順番に出す（段落・図・情報の行） ---------- */
+.js-ready .m-stagger > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--m-mid) var(--ease), transform var(--m-mid) var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+.js-ready .m-stagger.m-in > * { opacity: 1; transform: none; }
+
+/* ---------- 4. 図の枠：四隅のカギが外から寄ってきて、方眼がにじみ出る ---------- */
+.js-ready .dg::before { transform: translate(-14px, -14px); opacity: 0; transition: transform var(--m-slow) var(--ease), opacity 0.6s; }
+.js-ready .dg::after { transform: translate(14px, 14px); opacity: 0; transition: transform var(--m-slow) var(--ease), opacity 0.6s; }
+.js-ready .dg.m-in::before, .js-ready .dg.m-in::after { transform: none; opacity: 1; }
+/* タブを切り替えたとき、中身がふわっと入れ替わる */
+.dg-pane:not([hidden]) { animation: m-pane 0.6s var(--ease); }
+@keyframes m-pane { from { opacity: 0; transform: translateY(10px); } }
+/* 選んでいるタブの下線が伸びる */
+.dg-tabs button { position: relative; }
+.dg-tabs button::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.dg-tabs button[aria-selected="true"] { box-shadow: none; }
+.dg-tabs button[aria-selected="true"]::after { transform: scaleX(1); }
+
+/* ---------- 5. ボタン：光の筋が横切る ---------- */
+.btn, .dg-btn { position: relative; overflow: hidden; isolation: isolate; }
+.btn::before, .dg-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, color-mix(in srgb, var(--accent) 35%, transparent) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--ease);
+  pointer-events: none;
+}
+.btn:hover::before, .dg-btn:hover::before { transform: translateX(120%); }
+
+/* ---------- 6. 作品ページの先頭：題名がスクロールで少し沈み、薄くなる ---------- */
+.detail-hero .wrap { will-change: transform, opacity; }
+
+/* ---------- 7. 前後の作品：矢印が進む方へ動き、題名に線が引かれる ---------- */
+.pager a b { background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 1px no-repeat; transition: background-size 0.6s var(--ease), color 0.3s; }
+.pager a:hover b { background-size: 100% 1px; color: var(--accent); }
+.pager a small { display: inline-block; transition: transform 0.5s var(--ease); }
+.pager a:first-child:hover small { transform: translateX(-6px); }
+.pager a:last-child:hover small { transform: translateX(6px); }
+
+/* ---------- 8. 下のステータスバー：ページを開いたとき、下から差し込む ---------- */
+.hud { animation: m-hud 1s var(--ease) 0.6s both; }
+@keyframes m-hud { from { transform: translateY(100%); } }
+
+/* ---------- 9. About のマーカー：画面に入ったら、左から引かれる ---------- */
+.js-ready .prose.about strong {
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 1s var(--ease) 0.5s;
+}
+.js-ready .prose.about.m-in strong { background-size: 100% 100%; }
+
+/* ---------- 動きを減らす設定の人には、最初から出しておく ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js-ready .m-mask > img, .js-ready .m-mask > video, .js-ready .m-mask > .yt-facade,
+  .js-ready .m-stagger > *, .js-ready .dg::before, .js-ready .dg::after, .js-ready .detail-section > h2::before {
+    clip-path: none !important; transform: none !important; opacity: 1 !important; transition: none !important;
+  }
+  .detail-section > h2::after { width: min(160px, 100%); transition: none; }
+  .js-ready .prose.about strong { background-size: 100% 100%; transition: none; }
+  .dg-pane:not([hidden]), .hud { animation: none; }
+  .btn::before, .dg-btn::before { display: none; }
+}

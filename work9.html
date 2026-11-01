@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Snapmap | WORKS</title>
+  <meta name="description" content="ゼミのエージェントコーディング入門で制作した地図アプリ。気になる場所のURLをカードにして保存し、地図から見返したり友人に共有したりできます。">
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work9.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 09 <span>/ 10</span></p>
+        <h1 data-split data-hero>Snapmap</h1>
+        <p class="lead reveal ap" data-hero>気になる場所のURLをカードにして、地図に保存・共有するWebアプリ</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="https://snap-map-tau.vercel.app/" target="_blank" rel="noopener">アプリを開く ↗</a>
+          <a class="btn" href="#guide">使い方動画 ↓</a>
+          <a class="btn" href="#info">作品について ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/SnapMap" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <section class="detail-section">
+        <h2 class="reveal">About <small>説明</small></h2>
+        <div class="prose about ap">
+          <p class="lead reveal">気になるお店や施設のページを、<strong>場所のカードにして地図へ保存</strong>するアプリです。</p>
+          <p class="reveal">ゼミの<strong>「エージェントコーディング入門」</strong>で制作しました。URLから場所の情報をまとめ、「行きたい・行った」や星の評価と一緒に記録できます。</p>
+          <p class="reveal">保存した場所は地図と一覧で見返せます。友人にカードを送ったり、届いたカードを自分の地図に取り込んだりする機能も備えています。</p>
+        </div>
+      </section>
+
+      <section class="detail-section" id="guide">
+        <h2 class="reveal">Guide <small>使い方動画</small></h2>
+        <figure class="media-figure reveal">
+          <div class="player"><video src="media/snapmap/tutorial.mp4" poster="media/snapmap/tutorial.jpg" controls playsinline preload="metadata">お使いのブラウザでは動画を再生できません。</video></div>
+          <figcaption class="ap">ログインから保存・検索・共有まで（44秒・無音）。画面は公共施設のサンプルデータ、ログインは説明用の図です。地図：© OpenStreetMap contributors</figcaption>
+        </figure>
+      </section>
+      <section class="detail-section" id="play">
+        <h2 class="reveal">Try <small>使ってみる</small></h2>
+        <div class="play-card reveal">
+          <div>
+            <p class="play-lead">公開中のアプリを、別のタブで開きます</p>
+            <a class="play-cta" href="https://snap-map-tau.vercel.app/" target="_blank" rel="noopener">
+              <span class="play-cta-icon" aria-hidden="true">↗</span>
+              <span class="play-cta-text"><b>Snapmapを開く</b><small>Googleアカウントでログイン</small></span>
+            </a>
+            <ul class="play-req"><li><span>端末</span>PC・スマホ</li><li><span>ログイン</span>Google</li></ul>
+            <ol class="try-list ap">
+              <li>Googleアカウントでログインする</li>
+              <li>気になるお店や施設のURLを「場所を追加」に貼る</li>
+              <li>内容を確認し、「行きたい・行った」と星を選んで「地図に追加」</li>
+            </ol>
+            <p class="play-sub ap">ログインせずに雰囲気を見たい方は、このページの画面をご覧ください。</p>
+          </div>
+          <figure class="tutorial-video snapmap-preview">
+            <button type="button" class="zoomable" aria-label="拡大して見る：Snapmapの地図と場所カード"><img src="images/work9.jpg" alt="保存した場所の一覧と地図。右側でURLから場所を追加する画面" width="1366" height="860" loading="lazy"></button>
+            <figcaption>PCの画面（サンプルデータ）。画像を押すと拡大できます。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="detail-section" id="how">
+        <h2 class="reveal">Features <small>できること</small></h2>
+        <div class="prose ap">
+          <ol class="steps-list reveal">
+            <li><b>URLから場所を保存</b><span>ページの情報を読み取り、名前・概要・タグ・場所をカードにまとめます。保存前に内容や評価を確認できます。</span></li>
+            <li><b>地図と一覧で見返す</b><span>地図のピンと場所の一覧を行き来できます。検索、「行きたい・行った」の絞り込み、新しい順・近い順で探せます。</span></li>
+            <li><b>カードを送る・受け取る</b><span>保存した場所をメールアドレス指定や共有リンクで送れます。受け取ったカードは、自分の地図に追加できます。</span></li>
+            <li><b>AIで場所を探す</b><span>「上野の博物館」のように入力して、候補を探せます。提案からも場所を保存できます。</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <h2 class="reveal">Screens <small>スマホの画面</small></h2>
+        <div class="snapmap-screens">
+          <figure class="reveal"><button type="button" class="zoomable" aria-label="拡大して見る：場所の提案と評価"><img src="images/work9_suggest.jpg" alt="上野の博物館を探した候補と、行きたい度を選ぶ画面" width="390" height="844" loading="lazy"></button><figcaption>場所の候補から、行きたい度を選んで追加。</figcaption></figure>
+          <figure class="reveal" style="--d:1"><button type="button" class="zoomable" aria-label="拡大して見る：場所カードの詳細"><img src="images/work9_detail.jpg" alt="東京都庁展望室のカード。行った場所の満足度や訪問回数を表示" width="390" height="844" loading="lazy"></button><figcaption>場所カードの詳細。評価や訪問回数を記録。</figcaption></figure>
+          <p class="snapmap-screen-note ap">掲載画像は、公共施設のサンプルデータを使った検証画面です。AIの提案・現在地も検証用のデータです。地図：<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></p>
+        </div>
+      </section>
+
+      <section class="detail-section" id="info">
+        <h2 class="reveal">Information <small>作品情報</small></h2>
+        <dl class="meta-grid reveal ap">
+          <div><dt>制作の場</dt><dd>ゼミ「エージェントコーディング入門」</dd></div>
+          <div><dt>制作時期</dt><dd>2026年5月</dd></div>
+          <div><dt>発表日</dt><dd>2026年5月12日（前期B2ゼミ・デモ発表）</dd></div>
+          <div><dt>使用技術</dt><dd>Next.js・React・TypeScript・Tailwind CSS・Framer Motion</dd></div>
+          <div><dt>地図・データ</dt><dd>Leaflet・OpenStreetMap・Nominatim・Supabase・Gemini API</dd></div>
+          <div><dt>公開</dt><dd>Vercel（Googleアカウントでログイン）</dd></div>
+        </dl>
+      </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work8.html"><small>← Prev / 08</small><b>McDonald's App Trace</b></a>
+      <a href="work10.html"><small>Next / 10 →</small><b>ダンス動画の骨格推定</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

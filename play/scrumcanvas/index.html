@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScrumCanvas | Web版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Serif+JP:wght@500&family=Noto+Sans+JP:wght@400;600&display=swap">
+  <link rel="stylesheet" href="../player.css">
+  <style>
+    .wrap {
+      width: min(1040px, 100% - 16px);
+      margin: 0 auto;
+      padding: 8px 0 16px;
+    }
+
+    /* 上：題名と「使い方」「お手本」 */
+    .sc-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 16px;
+      margin-bottom: 10px;
+    }
+
+    .sc-head h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1;
+    }
+
+    .sc-head h1 small {
+      margin-left: 8px;
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .sc-head .row {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* 3D のキャンバスと、文字用のキャンバスを重ねる（画面幅に合わせて伸び縮み） */
+    #stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #stage canvas {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    #stage canvas.hud {
+      pointer-events: none;
+    }
+
+    /* 今やること：手順の説明と、押すべきボタンを1つだけ大きく */
+    .now {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      margin: 0 0 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+    }
+
+    .now-label {
+      font-family: "Cormorant Garamond", serif;
+      font-style: normal;
+      font-size: 1rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .next {
+      flex: 1 1 16em;
+      margin: 0;
+      font-size: clamp(0.85rem, 0.4vw + 0.75rem, 1rem);
+      line-height: 1.6;
+    }
+
+    .big {
+      min-height: 44px;
+      padding: 8px 22px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--on-accent);
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      animation: hintPulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes hintPulse {
+      50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 0%, transparent); }
+      0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+    }
+
+    /* 下：ボタンを役割ごとにまとめる */
+    .dock {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .group {
+      margin: 0;
+      padding: 10px 12px 12px;
+      border: 1px solid var(--line);
+      min-width: 0;
+    }
+
+    .group legend {
+      padding: 0 6px;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .group legend i {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    .group .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .keys button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 38px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--fg);
+      font: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .keys button:hover {
+      border-color: var(--accent);
+    }
+
+    .keys button kbd {
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .keys button[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .keys button[aria-pressed="true"] kbd {
+      color: var(--on-accent);
+    }
+
+    /* 次に押すボタンを光らせる */
+    .keys button.hint {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+
+    .keys button.danger:hover {
+      border-color: #d26a5c;
+      color: #f0a598;
+    }
+
+    .keys:has(.demo-on) button,
+    body.demo button[data-key] {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* 最初に出る「使い方」の案内（キャンバスの上に重ねる） */
+    .intro {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: grid;
+      place-content: center;
+      gap: 12px;
+      padding: clamp(12px, 3vw, 28px);
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      overflow-y: auto;
+      touch-action: pan-y;
+    }
+
+    .intro h2 {
+      margin: 0;
+      font-family: "Noto Serif JP", serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2.4vw, 1.4rem);
+      text-align: center;
+    }
+
+    .intro ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      counter-reset: s;
+    }
+
+    .intro li {
+      counter-increment: s;
+      padding: 10px;
+      border: 1px solid var(--line);
+      font-size: clamp(0.68rem, 1.3vw, 0.82rem);
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .intro li::before {
+      content: counter(s, upper-roman);
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+
+    .intro li b {
+      display: block;
+      color: var(--fg);
+    }
+
+    .intro .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .intro ol { grid-template-columns: 1fr 1fr; }
+      .steps li:not(.now) { display: none; }
+    }
+
+    /* 縦長のスマホでは、案内をキャンバスの下に出す */
+    @media (max-width: 480px) {
+      .intro { position: static; margin-top: 8px; border: 1px solid var(--line); }
+      #stage:has(+ .intro:not([hidden])) { display: none; }
+    }
+
+    details {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    summary {
+      cursor: pointer;
+      color: var(--fg);
+    }
+  </style>
+  <style>
+    /* 作品ページに埋め込んだときは、手順の一覧を隠す（遊び方は作品ページのお手本と動画で見せる） */
+    .embedded #steps { display: none; }
+  </style>
+  <script>
+    if (window.top !== window.self) document.documentElement.classList.add("embedded");
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="sc-head">
+      <h1>ScrumCanvas <small>ラグビーのサインプレーを描いて、3Dで再生</small></h1>
+      <div class="row">
+        <button type="button" class="pill" id="bHelp">使い方</button>
+        <button type="button" class="pill" id="bDemo">▶ お手本を見る</button>
+      </div>
+    </div>
+
+    <!-- 遊び方：今やる手順が光る（sketch.js の updateSteps） -->
+    <ol class="steps" id="steps" aria-label="遊び方">
+      <li id="s1"><b>コースを描く</b>青い選手（番号）を押して選び、緑のフィールドを指やマウスでなぞります。2人以上描きます。</li>
+      <li id="s2"><b>パスの順番</b>「パス順を記録」を押し、ボールが渡る順に選手を押します（例：9→10→12）。最後にもう一度押して終わります。</li>
+      <li id="s3"><b>パスの位置</b>「パス位置」を押し、パスごとに「投げる所」「受ける所」を、それぞれの線の上で押します。</li>
+      <li id="s4"><b>3Dで再生</b>「再生」を押すと、守備（赤）の動きと一緒に再生されます。ドラッグで視点を回せます。</li>
+    </ol>
+
+    <div class="now">
+      <span class="now-label">Now</span>
+      <p class="next" id="next" aria-live="polite"></p>
+      <button type="button" class="big" id="bNow" hidden></button>
+    </div>
+
+    <div id="stage"></div>
+    <div class="intro" id="intro" hidden>
+      <h2>4つの手順で、サインプレーを3Dにします</h2>
+      <ol>
+        <li><b>コースを描く</b>選手を押して、走る道をなぞる</li>
+        <li><b>パスの順番</b>ボールが渡る順に選手を押す</li>
+        <li><b>パスの位置</b>投げる所・受ける所を線の上で押す</li>
+        <li><b>3Dで再生</b>守備と一緒に動きを見る</li>
+      </ol>
+      <div class="row">
+        <button type="button" class="big" id="bIntroDemo">▶ まずお手本を見る（自動で操作します）</button>
+        <button type="button" class="pill" id="bIntroClose">自分でやってみる</button>
+      </div>
+    </div>
+
+    <!-- キーボードと同じ操作ができるボタン（役割ごとにまとめる） -->
+    <div class="dock keys" aria-label="操作ボタン">
+      <fieldset class="group">
+        <legend><i>I–III</i>作る</legend>
+        <div class="btns">
+          <button type="button" data-key="REC" id="bRec">パス順を記録</button>
+          <button type="button" data-key="P" id="bPass">パス位置<kbd>P</kbd></button>
+          <button type="button" data-key="SHIFT" id="bShift">選手の初期位置を動かす<kbd>Shift</kbd></button>
+          <button type="button" data-key="BACKSPACE">選んだ選手の線を消す<kbd>BS</kbd></button>
+        </div>
+      </fieldset>
+      <fieldset class="group">
+        <legend><i>IV</i>見る</legend>
+        <div class="btns">
+          <button type="button" data-key=" " id="bPlay">▶ 再生 / 一時停止<kbd>SPACE</kbd></button>
+          <button type="button" data-key="-">遅く<kbd>-</kbd></button>
+          <button type="button" data-key="+">速く<kbd>+</kbd></button>
+          <button type="button" data-key="TAB" id="bMode">描く ↔ 見回す<kbd>M</kbd></button>
+        </div>
+      </fieldset>
+      <fieldset class="group">
+        <legend>スクラムの位置・やり直し</legend>
+        <div class="btns">
+          <button type="button" data-key="L">左<kbd>L</kbd></button>
+          <button type="button" data-key="C">中央<kbd>C</kbd></button>
+          <button type="button" data-key="V">右<kbd>V</kbd></button>
+          <button type="button" data-key="R" class="danger">全部消す<kbd>R</kbd></button>
+        </div>
+      </fieldset>
+    </div>
+
+    <details>
+      <summary>キーボード・マウスの操作一覧</summary>
+      <ul>
+        <li>選手を押す：選ぶ ／ フィールドをドラッグ：選んだ選手のコースを描く</li>
+        <li>Shift を押しながらドラッグ：選手の初期位置を動かす（9番は動かせません）</li>
+        <li>見回すモード（M）：右ドラッグ（スマホは1本指）で回転、ホイール・[ ] でズーム、矢印キーで角度</li>
+        <li>上のバー（タイムライン）を押す・ドラッグ：好きな時点へ移る</li>
+        <li>T：再生中に、次の人へパスを投げる</li>
+      </ul>
+    </details>
+  </div>
+
+  <script src="../lib/p5.min.js"></script>
+  <script src="sketch.js?v=20261027c"></script>
+</body>
+</html>

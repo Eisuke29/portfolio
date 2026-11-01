@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScrumCanvas | WORKS</title>
+  <meta name="description" content="ラグビーのサインプレーを可視化する3D戦術シミュレーター">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work1.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 01 <span>/ 10</span></p>
+        <h1 data-split data-hero>ScrumCanvas</h1>
+        <p class="lead reveal" data-hero>ラグビーの<wbr>サインプレーを<wbr>可視化する<wbr>3D戦術シミュレーター</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#play">▶ Web版で<wbr>遊ぶ</a>
+          
+          <a class="btn" href="#info">作品に<wbr>ついて<wbr> ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/scrumcanvas" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ<wbr> ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+    <section class="detail-section">
+      <h2 class="reveal">About <small>説明</small></h2>
+      <div class="prose about">
+        <p class="lead reveal">ラグビーの<wbr>スクラムからの<wbr>攻撃で<wbr>使う<strong>サインプレー</strong>を<wbr>描いて<wbr>再生し、<wbr>守備の<wbr>反応まで<wbr>1画面で<wbr>確認できる<wbr>シミュレーターです。</p>
+        <p class="reveal"><wbr>サインプレーは<wbr>複雑で<wbr>覚えにくく、<wbr>ラグビー未経験の<wbr>人には<wbr>伝わりにくいと<wbr>いう<wbr>課題から、<wbr>動きを<wbr>目で<wbr>見て<wbr>共有できる<wbr>形に<wbr>しました。</p>
+        <p class="reveal">使い方は<wbr>シンプルで、<wbr>左・右・センターの<wbr>3パターンの<wbr>スクラムから<wbr>始め、<wbr>各選手の<wbr>走路、<wbr>パスの<wbr>順番、<wbr>パスを<wbr>出す位置と<wbr>受ける<wbr>位置を<wbr>マウスで<wbr>描いていくだけです。<wbr>指定が<wbr>終わると<wbr>再生モードに<wbr>切り<wbr>替わり、<strong>3Dで<wbr>視点を<wbr>自由に<wbr>動かしながら</strong>動きを<wbr>確認できます。<wbr>シークバーや<wbr>パスの<wbr>タイミングを<wbr>示すマーカーを<wbr>使って、<wbr>好きな<wbr>時点から<wbr>見直すこともできます。</p>
+        <p class="reveal">守備側は<wbr>簡易的な<wbr>AIと<wbr>して、<wbr>攻撃側の<wbr>動きに<wbr>合わせて<wbr><strong>マークする<wbr>相手を<wbr>切り<wbr>替えながら</strong><wbr>ラインを<wbr>保って<wbr>動きます。<wbr>発表では、<wbr>定番の<wbr>サインである<wbr>「ループ」を<wbr>実際に<wbr>再現して<wbr>見せました。</p>
+      </div>
+    </section>
+    <section class="detail-section" id="play">
+      <h2 class="reveal">Play <small>Web版で遊ぶ</small></h2>
+      <div class="play-stack">
+        <p class="play-note reveal"><button type="button" class="btn primary" data-scrum-demo>▶ 発表のお手本を見る</button></p>
+        <!-- お手本の再生に合わせて、今の場面がリアルタイムに光る（ゲーム画面の上に常に出す） -->
+        <div class="sign-flow is-sticky reveal" data-sign-flow>
+          <p class="sign-title">発表で再現したサイン「ループ」</p>
+          <ol>
+            <li><b>① ループ</b><span>10 と 12 のループパスで、敵を引きつける</span></li>
+            <li><b>② ゲイン</b><span>13 にパスすると見せて、裏の 11 へ</span></li>
+            <li><b>③ 展開</b><span>内側に敵が集まり、空いた外へ 15 → 14</span></li>
+          </ol>
+        </div>
+        <div class="play-frame reveal">
+          <button type="button" class="play-launch" data-play-src="play/scrumcanvas/index.html?v=20261027c" data-play-title="ScrumCanvas Web版">
+            <img src="images/thumbs/work1.jpg" alt="" width="960" height="540" loading="lazy">
+            <span><b>ScrumCanvas を起動する</b><small>PC・スマホ</small></span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Screenshots <small>スクリーンショット</small></h2>
+      <div class="gallery">
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：描画モード：各選手の走路とパスの位置を指定した画面"><img src="images/work1.jpg" alt="ScrumCanvasの実行画面。緑のグラウンド上に各選手の走路とパス位置が描かれている" loading="lazy"></button>
+          <figcaption>描画モード：各選手の<wbr>走路と<wbr>パスの<wbr>位置を<wbr>指定した<wbr>画面</figcaption>
+        </figure>
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：再生モード：指定したサインプレーを3Dで再生し、視点を変えながら確認している画面"><img src="images/work1_3d.jpg" alt="ScrumCanvasの再生モード。3D表示のグラウンド上を選手が走路に沿って動き、視点を変えて見ている様子の画面2枚" loading="lazy"></button>
+          <figcaption>再生モード：指定した<wbr>サインプレーを<wbr>3Dで<wbr>再生し、<wbr>視点を<wbr>変えながら<wbr>確認している<wbr>画面</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="info">
+      <h2 class="reveal">Information <small>作品情報</small></h2>
+      <dl class="meta-grid reveal">
+        <div><dt>動作環境</dt><dd>Windows / Processing 4<wbr>（3D描画モード P3D）</dd></div>
+        <div><dt>公表日</dt><dd>2025年9月12日<wbr>（EP演習 成果発表）</dd></div>
+        <div><dt>制作形態</dt><dd>個人制作</dd></div>
+      </dl>
+    </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work10.html"><small>← Prev / 10</small><b>ダンス動画の骨格推定</b></a>
+      <a href="work2.html"><small>Next / 02 →</small><b>チャンバラ <span class="nw">-RING OUT-</span></b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

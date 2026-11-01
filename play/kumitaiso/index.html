@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>みんなの組体操</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 背景のやわらかい色のかたまり（ガラスの向こうに透けて見える） -->
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <header class="topbar glass">
+    <h1 class="brand">みんなの<span>組体操</span></h1>
+    <ol class="steps" id="steps">
+      <li data-step="1"><b>1</b>ポーズ</li>
+      <li data-step="2"><b>2</b>撮影</li>
+      <li data-step="3"><b>3</b>計算</li>
+      <li data-step="4"><b>4</b>組み替え</li>
+    </ol>
+    <p class="status" id="status">準備中…</p>
+  </header>
+
+  <main class="layout">
+    <section class="stage glass" aria-label="組体操の舞台">
+      <canvas id="stage"></canvas>
+      <!-- 読み込み中の画面 -->
+      <div class="loading" id="loading" role="status" aria-live="polite">
+        <div class="lcard glass">
+          <div class="spinner" aria-hidden="true"><i></i><i></i><i></i></div>
+          <h2>準備中</h2>
+          <p class="lsub">画像を読みとるAIのモデルを読み込んでいます（はじめは数十秒かかることがあります）</p>
+          <ol class="lsteps" id="lsteps">
+            <li>計算のしくみ（TensorFlow.js）</li>
+            <li>人の形を切り抜くモデル</li>
+            <li>体の姿勢を見つけるモデル</li>
+            <li>手と指先を見つけるモデル</li>
+            <li>見本の形を用意</li>
+          </ol>
+          <div class="lbar"><i id="lbar"></i></div>
+          <p class="lpct" id="lpct">0%</p>
+        </div>
+      </div>
+      <div class="bigcount" id="bigCount" aria-live="polite"></div>
+      <div class="progress" id="progress"><i id="progressBar"></i></div>
+    </section>
+
+    <aside class="side">
+      <figure class="card glass live" id="liveCard">
+        <div class="media">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="sampleView" width="512" height="288"></canvas>
+          <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="track" cx="50" cy="50" r="44"></circle>
+            <circle class="bar" id="ringBar" cx="50" cy="50" r="44"></circle>
+          </svg>
+          <span class="count" id="count"></span>
+          <span class="flash" id="flash"></span>
+        </div>
+        <figcaption><b id="liveTitle">次に撮る場面</b><small id="liveNote">カウントが0になったら撮影します</small></figcaption>
+      </figure>
+
+      <figure class="card glass photo" id="photoCard">
+        <div class="media">
+          <canvas id="photo" width="512" height="288"></canvas>
+          <span class="empty" id="photoEmpty">まだ撮っていません</span>
+        </div>
+        <figcaption><b>撮った写真</b><small id="photoNote">この形を組体操で作ります</small></figcaption>
+      </figure>
+    </aside>
+  </main>
+
+  <nav class="dock glass" aria-label="操作">
+    <button type="button" id="btnPause"><span class="ico">⏸</span><span class="lbl">一時停止</span></button>
+    <button type="button" id="btnShoot"><span class="ico">◉</span><span class="lbl">今すぐ撮る</span></button>
+    <button type="button" id="btnSource"><span class="ico">⇄</span><span class="lbl">見本の形にする</span></button>
+    <button type="button" id="btnDebug" aria-pressed="false"><span class="ico">◎</span><span class="lbl">しくみ</span></button>
+    <button type="button" id="btnInfo"><span class="ico">i</span><span class="lbl">クレジット</span></button>
+  </nav>
+
+  <pre class="debug glass" id="debug" hidden></pre>
+  <div class="toast glass" id="toast" role="status"></div>
+
+  <!-- クレジット -->
+  <div class="modal" id="info" role="dialog" aria-modal="true" aria-labelledby="infoTitle" hidden>
+    <div class="sheet glass">
+      <h2 id="infoTitle">クレジット</h2>
+      <ul class="rules">
+        <li>動きのデータ：CMU Graphics Lab Motion Capture Database（mocap.cs.cmu.edu）</li>
+        <li>動きのデータ：ACCAD Motion Capture（The Ohio State University、CC BY 3.0）</li>
+        <li>人の切り抜き：MediaPipe Selfie Segmentation／手の検出・手の点：MediaPipe Hands（Apache License 2.0）／姿勢：MoveNet（Apache License 2.0）</li>
+        <li>計算ライブラリ：TensorFlow.js（Apache License 2.0）</li>
+      </ul>
+      <div class="actions"><button type="button" class="primary" id="btnInfoClose">閉じる</button></div>
+    </div>
+  </div>
+
+  <script>
+    // 細かさ：棒人間の大きさはそのままで、舞台を3倍に細かくする（約600人）
+    const WP_RES = 3;
+  </script>
+  <script src="lib/tf.min.js"></script>
+  <script src="models/seg_model.js"></script>
+  <script src="models/pose_model.js"></script>
+  <script src="models/palm_model.js"></script>
+  <script src="models/hand_model.js"></script>
+  <script src="js/vision.js"></script>
+  <script src="js/skeleton.js"></script>
+  <script src="js/mocap_data.js"></script>
+  <script src="js/mocap.js"></script>
+  <script src="js/stack.js"></script>
+  <script src="js/raster.js"></script>
+  <script src="js/poses.js"></script>
+  <script src="js/sculpt.js"></script>
+  <script src="js/sample_shapes.js"></script>
+  <script src="js/stage.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

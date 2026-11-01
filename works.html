@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WORKS | 作品一覧</title>
+  <meta name="description" content="これまでに制作した作品の一覧">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="page-hero wrap">
+      <p class="eyebrow" data-hero>Works</p>
+      <h1 class="section-title" data-split data-hero>All Works<small>作品一覧</small></h1>
+      <p class="count reveal" data-hero role="status" aria-live="polite" aria-atomic="true"><span id="shown">10</span> / 10 works</p>
+    </section>
+
+    <div class="toolbar">
+      <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <div class="filters" id="filters" role="group" aria-label="種類で絞り込む">
+          <span class="pill" aria-hidden="true"></span>
+          <button type="button" data-f="all" aria-pressed="true">すべて<sup>10</sup></button>
+          <button type="button" data-f="play" aria-pressed="false">遊べる<sup>7</sup></button>
+          <button type="button" data-f="web" aria-pressed="false">Webアプリ<sup>2</sup></button>
+          <button type="button" data-f="game" aria-pressed="false">ゲーム<sup>2</sup></button>
+          <button type="button" data-f="interaction" aria-pressed="false">インタラクション<sup>3</sup></button>
+          <button type="button" data-f="film" aria-pressed="false">映像<sup>2</sup></button>
+          <button type="button" data-f="ui" aria-pressed="false">UI<sup>1</sup></button>
+          <button type="button" data-f="processing" aria-pressed="false">Processing<sup>2</sup></button>
+          <button type="button" data-f="vision" aria-pressed="false">画像認識<sup>1</sup></button>
+          <button type="button" data-f="unity" aria-pressed="false">Unity<sup>2</sup></button>
+        </div>
+        <label class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input type="search" id="search" placeholder="キーワードで探す" aria-label="キーワードで探す">
+        </label>
+        <select id="sort" class="btn" aria-label="並べ替え" style="padding:8px 14px">
+          <option value="no">番号順</option>
+          <option value="new">新しい<wbr>順</option>
+          <option value="old">古い<wbr>順</option>
+        </select>
+        <div class="view-toggle" role="group" aria-label="表示の形">
+          <button type="button" class="icon-btn" data-view="grid" aria-pressed="true" aria-label="タイル表示"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></button>
+          <button type="button" class="icon-btn" data-view="list" aria-pressed="false" aria-label="リスト表示"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="works-grid" id="grid">
+    <article class="work-card reveal" data-filter="processing tool play" data-date="2025-09-12" data-no="1" style="--d:1">
+      <a href="work1.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">01</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work1.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>ScrumCanvas</h2>
+          <p>ラグビーの<wbr>サインプレーを<wbr>可視化する<wbr>3D戦術シミュレーター</p>
+          <ul class="tags"><li>Processing</li><li>3D</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2025.09</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="game interaction processing play" data-date="2026-01-19" data-no="2" style="--d:2">
+      <a href="work2.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">02</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work2.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>チャンバラ <span class="nw">-RING OUT-</span></h2>
+          <p>自作の<wbr>剣型コントローラーで<wbr>戦う<wbr>2人対戦チャンバラゲーム</p>
+          <ul class="tags"><li>Processing</li><li>Arduino</li><li>チーム制作</li></ul>
+          <div class="work-meta"><span>2026.01</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="game unity play" data-date="2026-06-23" data-no="3" style="--d:0">
+      <a href="work3.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">03</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work3.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>CHROMATIC SHIFT</h2>
+          <p>背景色を<wbr>切り<wbr>替えて<wbr>足場や<wbr>箱を<wbr>消しながら<wbr>進む<wbr>3Dパズルアクション</p>
+          <ul class="tags"><li>Unity</li><li>3D</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.06</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="film" data-date="2026-06-12" data-no="4" style="--d:1">
+      <a href="work4.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">04</span>
+          <span class="badge">VIDEO</span>
+          <img src="images/thumbs/work4.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work4.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h2>DriftWalk Theater</h2>
+          <p>RDWと<wbr>GVSを<wbr>用いた、<wbr>映像視聴中の<wbr>直線<wbr>移動感維持型 歩行誘導システム<wbr>（ビデオプロトタイプ）</p>
+          <ul class="tags"><li>映像</li><li>ビデオプロトタイプ</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.06</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="interaction unity play" data-date="2026-07-24" data-no="5" style="--d:2">
+      <a href="work5.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">05</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work5.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>UNSPOKEN</h2>
+          <p>参加者自身が<wbr>操作体系を<wbr>構成する<wbr>ハンドジェスチャ・インタラクション</p>
+          <ul class="tags"><li>Unity</li><li>ハンドジェスチャ</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.07</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="film" data-date="2026-06-15" data-no="6" style="--d:0">
+      <a href="work6.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">06</span>
+          <span class="badge">VIDEO</span>
+          <img src="images/thumbs/work6.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work6.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h2>エレベーター</h2>
+          <p>作業を<wbr>終えた<wbr>主人公が、<wbr>帰る<wbr>ために<wbr>エレベーターへ<wbr>向かう。<wbr>何気ない<wbr>日常の<wbr>中に<wbr>違和感が<wbr>入り込む短編ホラー。</p>
+          <ul class="tags"><li>映像</li><li>ホラー</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.06</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="interaction play web" data-date="2026-10-19" data-no="7" style="--d:1">
+      <a href="work7.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">07</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work7.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work7.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h2>みんなの組体操</h2>
+          <p>ポーズを<wbr>とるだけで、<wbr>約600人の<wbr>棒人間が<wbr>その形の<wbr>組体操を<wbr>つくる<wbr>インタラクション</p>
+          <ul class="tags"><li>JavaScript</li><li>画像認識</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.10</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="ui play" data-date="2026-05-26" data-no="8" style="--d:2">
+      <a href="work8.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">08</span>
+          <span class="badge play">PLAY</span>
+          <img src="images/thumbs/work8.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+          <video data-src="images/work8.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+        </div>
+        <div class="work-body">
+          <h2>McDonald's App Trace</h2>
+          <p class="ap">Figma でマクドナルド公式アプリの30画面と画面遷移を完全再現したプロトタイプ</p>
+          <ul class="tags"><li>Figma</li><li>UI トレース</li><li>個人制作</li></ul>
+          <div class="work-meta"><span>2026.05</span><span>詳しく<wbr>見る<wbr> <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="web play" data-date="2026-05-12" data-no="9" style="--d:0">
+      <a href="work9.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">09</span>
+          <span class="badge play">WEB APP</span>
+          <img src="images/thumbs/work9.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>Snapmap</h2>
+          <p class="ap">気になる場所のURLをカードにして、地図に保存・共有するWebアプリ</p>
+          <ul class="tags"><li>Next.js</li><li>TypeScript</li><li>地図</li></ul>
+          <div class="work-meta"><span>2026.05</span><span>詳しく見る <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+    <article class="work-card reveal" data-filter="vision matlab" data-date="2026-05-25" data-no="10" style="--d:1">
+      <a href="work10.html" data-cursor="VIEW">
+        <div class="work-media">
+          <span class="work-no">10</span>
+          <span class="badge">VISION</span>
+          <img src="images/thumbs/work10.jpg" alt="" width="960" height="540" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h2>ダンス動画の<wbr>骨格推定</h2>
+          <p class="ap">人物検出と17点の骨格推定を組み合わせ、動画の動きを可視化</p>
+          <ul class="tags"><li>MATLAB</li><li>YOLOv4</li><li>HRNet</li></ul>
+          <div class="work-meta"><span>2026.05</span><span>詳しく見る <span class="arrow">→</span></span></div>
+        </div>
+      </a>
+    </article>
+
+      </div>
+      <div class="empty" id="empty" role="status">
+        <p>条件に<wbr>合う<wbr>作品が<wbr>見つかりませんでした。</p>
+        <button type="button" class="btn" id="resetWorks">条件を<wbr>リセットする</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+  <script src="js/works.js?v=20261101145932"></script>
+</body>
+</html>

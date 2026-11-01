@@ -1,0 +1,521 @@
+/* =========================================================
+   v2 追加スタイル（近未来の管制室）
+   style.css の上に重ねて読み込む。色は style.css の変数をそのまま使う
+   ========================================================= */
+
+:root {
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --ok: #5fe3a1;
+  --warn: #ffb547;
+  --hit: #ff6b7d;
+  --hud-h: 30px;
+}
+:root[data-theme="light"] {
+  --ok: #0f8a55;
+  --warn: #b26a00;
+  --hit: #c8243a;
+}
+
+
+
+/* ---------- 1. 見出しに区画番号（SEC.01 …） ---------- */
+main { counter-reset: sec; }
+.detail-section > h2 { counter-increment: sec; }
+.detail-section > h2::before {
+  content: "SEC." counter(sec, decimal-leading-zero);
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+/* ---------- 2. 下のステータスバー ---------- */
+.hud {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 60;
+  height: var(--hud-h);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 var(--gutter);
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.hud b { font-weight: 500; color: var(--fg); }
+.hud .hud-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 8px var(--ok);
+  animation: hudBlink 2.4s infinite;
+}
+@keyframes hudBlink { 50% { opacity: 0.35; } }
+.hud .hud-log {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--accent);
+}
+.hud .hud-log.is-new { animation: hudFlash 0.6s; }
+@keyframes hudFlash { from { color: var(--fg); text-shadow: 0 0 10px var(--accent); } }
+.hud .hud-bar {
+  position: absolute;
+  left: 0; top: -1px;
+  height: 1px;
+  width: 0;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+@media (max-width: 700px) {
+  .hud .hud-sec, .hud .hud-clock { display: none; }
+}
+
+
+/* ---------- 3. 図の枠（パネル） ---------- */
+#how.detail-section { grid-template-columns: 1fr; }
+#how.detail-section > h2 { position: static; }
+
+.dg {
+  position: relative;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--bg-2);
+  background-blend-mode: normal;
+}
+/* 四隅のカギ */
+.dg::before, .dg::after {
+  content: "";
+  position: absolute;
+  width: 14px; height: 14px;
+  border: 2px solid var(--accent);
+  pointer-events: none;
+}
+.dg::before { left: -2px; top: -2px; border-right: 0; border-bottom: 0; }
+.dg::after { right: -2px; bottom: -2px; border-left: 0; border-top: 0; }
+
+.dg-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+.dg-tabs button {
+  padding: 12px 18px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.dg-tabs button small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: inherit;
+  opacity: 0.8;
+}
+.dg-tabs button:hover { color: var(--fg); }
+.dg-tabs button[aria-selected="true"] {
+  color: var(--fg);
+  background: var(--bg-2);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+.dg-tabs button[aria-selected="true"] small { color: var(--accent); }
+
+.dg-pane { padding: clamp(16px, 3vw, 32px); }
+.dg-pane[hidden] { display: none; }
+
+.dg-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 36px);
+  align-items: start;
+}
+@media (max-width: 860px) { .dg-grid { grid-template-columns: 1fr; } }
+
+.dg svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dg-stage {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  touch-action: manipulation;
+}
+
+.dg-side h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.dg-side p { margin: 0 0 1em; font-size: 0.9rem; line-height: 1.9; color: var(--muted); }
+.dg-side p b { color: var(--fg); font-weight: 700; }
+.dg-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.dg-hint::before { content: "▸ "; }
+.dg-note { margin-top: 14px; font-size: 0.78rem; color: var(--muted); }
+
+/* 操作ボタン */
+.dg-ctrl { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.dg-btn {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s;
+}
+.dg-btn:hover { border-color: var(--accent); }
+.dg-btn:active { transform: translateY(1px); }
+.dg-btn[aria-pressed="true"], .dg-btn.is-main {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.dg-btn kbd {
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+.dg-btn:disabled { opacity: 0.4; cursor: default; }
+.dg-range { width: 100%; accent-color: var(--accent); }
+
+/* 読み取り表示（メーター） */
+.dg-readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 1px;
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+.dg-readout div { padding: 8px 10px; background: var(--bg); }
+.dg-readout dt {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.dg-readout dd { margin: 2px 0 0; font-size: 1rem; font-weight: 700; color: var(--fg); }
+.dg-readout dd.is-ok { color: var(--ok); }
+.dg-readout dd.is-warn { color: var(--warn); }
+.dg-readout dd.is-hit { color: var(--hit); }
+
+/* SVG 共通の線・文字 */
+.dg .s-line { stroke: var(--line-strong); fill: none; }
+.dg .s-faint { stroke: var(--line); fill: none; }
+.dg .s-acc { stroke: var(--accent); fill: none; }
+.dg .f-acc { fill: var(--accent); }
+.dg .f-fg { fill: var(--fg); }
+.dg .f-muted { fill: var(--muted); }
+.dg .f-bg { fill: var(--bg); }
+.dg .f-bg2 { fill: var(--bg-2); }
+.dg .f-hit { fill: var(--hit); }
+.dg .f-ok { fill: var(--ok); }
+.dg text { font-family: var(--font-body); font-size: 13px; }
+.dg text.mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; }
+
+/* ---------- 4. システム構成図（ノードとつなぎ線） ---------- */
+.flow-node { cursor: pointer; }
+.flow-node rect {
+  fill: var(--bg);
+  stroke: var(--line-strong);
+  stroke-width: 1.2;
+  transition: stroke 0.2s, fill 0.2s;
+}
+.flow-node:hover rect, .flow-node:focus-visible rect { stroke: var(--accent); }
+.flow-node.is-on rect { stroke: var(--accent); stroke-width: 2; fill: color-mix(in srgb, var(--accent) 14%, var(--bg)); }
+.flow-node:focus { outline: none; }
+.flow-node text.t { fill: var(--fg); font-weight: 700; font-size: 13px; }
+.flow-node text.s { fill: var(--muted); font-size: 11px; }
+.flow-node text.k { fill: var(--accent); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; }
+.flow-link { stroke: var(--line-strong); stroke-width: 1.2; fill: none; }
+.flow-link.is-on { stroke: var(--accent); }
+.flow-label { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; }
+.flow-packet { fill: var(--accent); filter: drop-shadow(0 0 4px var(--accent)); }
+.flow-detail {
+  min-height: 7.5em;
+  padding: 14px 16px;
+  border-left: 2px solid var(--accent);
+  background: var(--bg);
+}
+.flow-detail .k {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+.flow-detail p { margin: 0; }
+
+/* ---------- 5. トップ：ツールと作品のつながり ---------- */
+.linkmap { margin-top: clamp(28px, 4vw, 48px); }
+.linkmap .lm-node { cursor: pointer; }
+.linkmap .lm-node circle { fill: var(--bg); stroke: var(--line-strong); stroke-width: 1.2; transition: stroke 0.2s, fill 0.2s; }
+.linkmap .lm-node text { fill: var(--muted); font-size: 12px; transition: fill 0.2s; }
+.linkmap .lm-node.is-work circle { fill: var(--bg-2); }
+.linkmap .lm-node.is-work text { fill: var(--fg); font-weight: 700; }
+.linkmap .lm-edge { stroke: var(--line); stroke-width: 1; transition: stroke 0.2s, stroke-width 0.2s; }
+.linkmap.is-focus .lm-node:not(.is-hot) { opacity: 0.25; }
+.linkmap.is-focus .lm-edge:not(.is-hot) { opacity: 0.15; }
+.linkmap .lm-node.is-hot circle { stroke: var(--accent); fill: color-mix(in srgb, var(--accent) 18%, var(--bg)); }
+.linkmap .lm-node.is-hot text { fill: var(--fg); }
+.linkmap .lm-edge.is-hot { stroke: var(--accent); stroke-width: 2; }
+.linkmap .lm-node:focus { outline: none; }
+.linkmap .lm-node:focus-visible circle { stroke: var(--accent); stroke-width: 2; }
+
+/* ---------- 6. 個別の図 ---------- */
+/* チャンバラ：剣 */
+.sword-me { stroke: var(--accent); stroke-width: 7; stroke-linecap: round; transition: transform 0.35s var(--ease); }
+.sword-cpu { stroke: var(--hit); stroke-width: 7; stroke-linecap: round; transition: transform 0.35s var(--ease); }
+.ring-me { fill: var(--accent); transition: cx 0.45s var(--ease); }
+.ring-cpu { fill: var(--hit); transition: cx 0.45s var(--ease); }
+.stage-btns .dg-btn { min-width: 44px; padding: 8px 10px; }
+.stage-btns svg { width: 24px; height: 24px; vertical-align: middle; }
+/* 小さいボタンでも鍔と柄が読めるよう、同じ形の線だけを太くする。 */
+.stage-btns svg [data-sword-part="blade"] { stroke-width: 14 !important; }
+.stage-btns svg [data-sword-part="guard"] { stroke-width: 12 !important; }
+.stage-btns svg [data-sword-part="grip"] { stroke-width: 20 !important; }
+
+/* エレベーター：ピント */
+.focus-obj { cursor: pointer; transition: filter 0.4s, opacity 0.4s; }
+.focus-scene.has-focus .focus-obj:not(.is-focus) { filter: blur(3.5px); opacity: 0.55; }
+.scene-chip { cursor: pointer; }
+.scene-chip rect { fill: var(--bg); stroke: var(--line-strong); transition: fill 0.2s, stroke 0.2s; }
+.scene-chip:hover rect { stroke: var(--accent); }
+.scene-chip.is-on rect { fill: color-mix(in srgb, var(--accent) 22%, var(--bg)); stroke: var(--accent); }
+.scene-chip text { fill: var(--fg); font-size: 11.5px; }
+.scene-chip:focus { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hud .hud-dot { animation: none; }
+  .sword-me, .sword-cpu, .ring-me, .ring-cpu { transition: none; }
+}
+.dg-title {
+  margin: 0;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--fg);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+.dg-title small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+/* 図のそばの説明は、普通の折り返しにする（句読点まで待たない） */
+.dg-side p, .dg-side h3, .flow-detail p { word-break: normal; overflow-wrap: anywhere; line-break: strict; }
+.dg-btn, .dg-stage { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+
+/* ---------- 7. 遊ぶ欄（文字を減らした形） ---------- */
+.play-sub { margin-top: 14px !important; font-size: 0.85rem; color: var(--muted); }
+.how-link { color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+.play-note .btn { margin-right: 14px; }
+.stage-btns { align-items: center; }
+.dg-side h3 { font-size: 1.15rem; }
+
+/* 選んでいるボタンをはっきりさせる（色はすぐ切り替え、選んだものだけ塗りつぶし＋太字） */
+.dg-btn { transition: border-color 0.2s, transform 0.1s; }
+.dg-btn[aria-pressed="false"] { color: var(--muted); }
+.dg-btn[aria-pressed="true"] { font-weight: 700; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+
+/* ---------- 8. About：読みやすさ（リード・数字の帯・マーカー・行をそろえる） ---------- */
+.prose.about { max-width: 38em; }
+.prose.about p {
+  font-size: 1.02rem;
+  line-height: 2;
+  color: color-mix(in srgb, var(--fg) 82%, var(--bg));
+  word-break: normal;
+  line-break: strict;
+  text-align: justify;
+  text-justify: inter-character;
+}
+.prose.about p.lead {
+  margin-bottom: 1.1em;
+  font-size: clamp(1.25rem, 1.1vw + 0.9rem, 1.6rem);
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--fg);
+  text-align: left;
+  word-break: keep-all;
+}
+.prose.about strong {
+  font-weight: 700;
+  color: var(--fg);
+  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 38%, transparent) 62%);
+  padding: 0 0.1em;
+}
+.about-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0 0 2.2em;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.about-facts div { flex: 1 1 140px; padding: 16px 18px 14px 0; }
+.about-facts div + div { padding-left: 18px; border-left: 1px solid var(--line); }
+.about-facts dt {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 2vw + 0.6rem, 2.2rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.about-facts dd { margin: 6px 0 0; font-size: 0.78rem; color: var(--muted); }
+@media (max-width: 600px) {
+  .about-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; }
+  .about-facts div { padding: 12px 8px 10px 0; }
+  .about-facts div + div { padding-left: 10px; }
+  .about-facts dt { font-size: 1.15rem; }
+  .about-facts dd { font-size: 0.68rem; }
+}
+
+/* 発表資料：スライドとポスターを並べる（ポスターは縦長） */
+.slides-pair { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: clamp(14px, 2vw, 28px); align-items: start; }
+.slides-pair .slide-figure { margin: 0; }
+@media (max-width: 760px) { .slides-pair { grid-template-columns: 1fr; } }
+
+/* ScrumCanvas：発表で再現したサイン「ループ」の3つの場面（再生中は今の場面が光る） */
+.sign-flow { margin-top: 18px; }
+.sign-title { margin: 0 0 10px; font-size: 0.85rem; color: var(--muted); }
+.sign-flow ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+@media (max-width: 760px) { .sign-flow ol { grid-template-columns: 1fr; } }
+.sign-flow li {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-2);
+  transition: border-color 0.3s, background 0.3s, opacity 0.3s;
+}
+.sign-flow li b { display: block; margin-bottom: 4px; font-size: 1.05rem; color: var(--fg); }
+.sign-flow li span { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.sign-flow li.is-now { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--bg-2)); }
+.sign-flow li.is-now b { color: var(--accent); }
+.sign-flow li.is-done { opacity: 0.55; }
+/* ゲーム画面の上に置き、下へスクロールしてもヘッダーの下に付いたまま見える */
+.play-stack .play-note { margin: 0 0 12px; }
+.sign-flow.is-sticky {
+  position: sticky;
+  top: calc(var(--header-h) + 8px);
+  z-index: 5;
+  margin: 0 0 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+}
+.sign-flow.is-sticky li { padding: 10px 14px; }
+@media (max-width: 760px) {
+  /* 固定欄がゲームを覆わないよう、スマホでは3場面を1段にする。 */
+  .sign-flow.is-sticky { padding: 10px; }
+  .sign-flow.is-sticky .sign-title { margin-bottom: 8px; font-size: 0.75rem; }
+  .sign-flow.is-sticky ol { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .sign-flow.is-sticky li { padding: 8px 4px; text-align: center; }
+  .sign-flow.is-sticky li b { margin: 0; font-size: 0.8rem; white-space: nowrap; }
+  .sign-flow.is-sticky li span { display: none; }
+}
+
+/* DriftWalk：About の頭だけに、2つの方法の組み合わせを示す。 */
+/* 3列：RDW ／ × ／ GVS。下の段の説明は、それぞれの言葉の真下に中央そろえ */
+.about-method {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  column-gap: clamp(14px, 2.4vw, 28px);
+  row-gap: 8px;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 1.8rem;
+}
+.about-method .m-term {
+  color: var(--accent);
+  font: 500 clamp(2.2rem, 4.5vw, 3.8rem)/1.1 var(--font-mono);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.about-method .m-x { font: 400 clamp(1.4rem, 2.4vw, 2rem)/1 var(--font-mono); color: var(--muted); }
+.about-method small { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+/* UNSPOKEN：ポスターと同じ3段階。選んだ段階の絵だけが動く。 */
+.overview-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; margin: 0; padding: 0; list-style: none; }
+.overview-steps li { position: relative; min-width: 0; }
+.overview-steps li:not(:last-child)::after { content: "▸"; position: absolute; right: -20px; top: 50%; color: var(--muted); transform: translateY(-50%); }
+.overview-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+.overview-step:hover, .overview-step:focus-visible { border-color: var(--accent); }
+.overview-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.overview-step.is-current { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+.overview-picture { display: block; width: 100%; max-width: 250px; margin-bottom: 14px; }
+.overview-copy b { display: block; margin-bottom: 8px; font: 500 clamp(1rem, 1.5vw, 1.25rem)/1.3 var(--font-mono); letter-spacing: 0.04em; }
+.is-current .overview-copy b { color: var(--accent); }
+.overview-copy > span { display: block; font-size: 0.85rem; line-height: 1.7; word-break: normal; }
+.overview-controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; }
+.overview-controls p { margin: 0; }
+.overview-thought, .overview-skeleton, .overview-nul, .overview-ok { transform-box: fill-box; transform-origin: center; }
+.is-current .overview-thought { animation: overview-think 2s ease-in-out infinite; }
+.is-current .overview-skeleton { animation: overview-teach 2s ease-in-out infinite; }
+.is-current .overview-nul { animation: overview-use 2s ease-in-out infinite; }
+.is-current .overview-ok { animation: overview-ok 2s ease-in-out infinite; }
+[data-demo="unspoken-overview"] svg * { animation-play-state: paused; }
+[data-demo="unspoken-overview"].is-visible svg * { animation-play-state: running; }
+@keyframes overview-think { 50% { transform: scale(1.08); } }
+@keyframes overview-teach { 0%, 100% { opacity: 0.25; } 45%, 75% { opacity: 1; } }
+@keyframes overview-use { 0%, 70%, 100% { transform: translateY(0); } 35% { transform: translateY(-12px); } }
+@keyframes overview-ok { 0%, 100% { opacity: 0.2; } 35%, 70% { opacity: 1; } }
+@media (max-width: 700px) {
+  .overview-steps { grid-template-columns: 1fr; gap: 22px; }
+  .overview-steps li:not(:last-child)::after { right: auto; left: 50%; top: auto; bottom: -21px; transform: translateX(-50%) rotate(90deg); }
+  .overview-step { flex-direction: row; gap: 14px; padding: 12px; text-align: left; }
+  .overview-picture { flex: 0 0 40%; margin: 0; }
+  .overview-copy { min-width: 0; }
+  .overview-copy > span { font-size: 0.8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overview-step svg * { animation: none !important; }
+}

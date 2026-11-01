@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DriftWalk Theater | WORKS</title>
+  <meta name="description" content="RDWとGVSを用いた、映像視聴中の直線移動感維持型 歩行誘導システム（ビデオプロトタイプ）">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work4.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 04 <span>/ 10</span></p>
+        <h1 data-split data-hero>DriftWalk Theater</h1>
+        <p class="lead reveal" data-hero>RDWと<wbr>GVSを<wbr>用いた、<wbr>映像視聴中の<wbr>直線<wbr>移動感維持型 歩行誘導システム<wbr>（ビデオプロトタイプ）</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#movie">映像を<wbr>見る<wbr> ↓</a>
+          <a class="btn" href="#slide">発表資料 ↓</a>
+          <a class="btn" href="#info">作品に<wbr>ついて<wbr> ↓</a>
+          <a class="btn" href="#how">仕組み ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/driftwalk-theater" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ<wbr> ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+    <section class="detail-section" id="slide">
+      <h2 class="reveal">Presentation <small>発表資料</small></h2>
+      <figure class="slide-figure reveal">
+        <button type="button" class="zoomable" aria-label="拡大して見る：春学期中間発表の1枚スライド"><img src="images/work4_slide.jpg" alt="DriftWalk Theaterの発表スライド。HMDを着けた人の後ろ姿と、RDWとGVSを組み合わせたシステムの説明"></button>
+        <figcaption>春学期中間発表の<wbr>1枚スライド</figcaption>
+      </figure>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">About <small>説明</small></h2>
+      <div class="prose about">
+        <div class="about-method reveal"><span class="m-term">RDW</span><b class="m-x">×</b><span class="m-term">GVS</span><small>「前」をずらす</small><i></i><small>方向感覚を補助</small></div>
+        <p class="lead reveal">歩いて<wbr>移動しながら<wbr>動画や<wbr>映画を<wbr>見たい<wbr>場面は<wbr>ありますが、<wbr>映像に<wbr>集中すると<wbr>歩きスマホのように<wbr>危険です。</p>
+        <p class="reveal"><wbr>そこで、<wbr>HMDで<wbr>映像を<wbr>見ながら<wbr>歩いていても、<wbr>本人は<strong>まっすぐ<wbr>歩いている<wbr>感覚の<wbr>まま</strong>目的地へ<wbr>誘導される<wbr>システムを<wbr>構想しました。</p>
+        <p class="reveal">システムは、<wbr>目的地や<wbr>経路、<wbr>ユーザーの<wbr>歩行状態、<wbr>周囲の<wbr>障害物などの<wbr>情報から<wbr>誘導の<wbr>計画を<wbr>立てます。<wbr>そのうえで、<wbr>HMD内の<wbr>スクリーンが<wbr>作る<wbr>「前」の<wbr>向きを<wbr>少しずつずらす<strong>RDW（Redirected Walking）</strong>と、<wbr>耳の<wbr>後ろの<wbr>電極から<wbr>微弱な<wbr>刺激を<wbr>与えて<wbr>方向感覚を<wbr>補助する<strong>GVS<wbr>（前庭電気刺激）</strong>を<wbr>組み合わせ、<wbr>歩く<wbr>向きを<wbr>制御します。</p>
+        <p class="reveal">本作品は<wbr>実際には<wbr>構築しておらず、<wbr>「こんな<wbr>システムが<wbr>あったら<wbr>いい」と<wbr>いう<wbr>アイデアを<wbr>映像で<wbr>表現した<strong>ビデオプロトタイピング</strong>作品です。<wbr>テーマパークや<wbr>学校案内、<wbr>美術館、<wbr>展示会、<wbr>大型商業施設などでの<wbr>活用を<wbr>想定しています。</p>
+      </div>
+    </section>
+    <section class="detail-section" id="movie">
+      <h2 class="reveal">Film <small>紹介映像</small></h2>
+      <figure class="media-figure reveal">
+        <div class="player">
+          <video src="images/work4.mp4" poster="images/work4_poster.jpg" controls playsinline preload="metadata">お使いの<wbr>ブラウザで<wbr>は<wbr>動画を<wbr>再生できません。</video>
+        </div>
+        <figcaption>ビデオプロトタイプ本編<wbr>（約90秒・音声・字幕あり）</figcaption>
+      </figure>
+    </section>
+    <section class="detail-section" id="how">
+      <h2 class="reveal">How <small>仕組み</small></h2>
+      <div class="dg reveal" data-dg>
+        <div class="dg-tabs" role="tablist" aria-label="図の切り替え">
+          <button type="button" role="tab" aria-selected="true" aria-controls="dg-a"><small>CONCEPT</small>まっすぐのつもりで曲がる</button>
+        </div>
+        <div class="dg-pane" id="dg-a" role="tabpanel">
+          <div class="dg-grid">
+            <div class="dg-stage" data-demo="driftwalk"></div>
+            <div class="dg-side">
+              <h3>横から人が来ても、まっすぐの感覚のままよける</h3>
+              <p class="dg-hint">誘導あり・なしで歩かせて比べる</p>
+              <div class="dg-ctrl" data-role="modes" aria-label="誘導の方法">
+                <button type="button" class="dg-btn" data-mode="none" aria-pressed="false">誘導なし</button>
+                <button type="button" class="dg-btn" data-mode="guide" aria-pressed="true">誘導あり</button>
+                <button type="button" class="dg-btn is-main" data-role="play">▶ 歩く</button>
+              </div>
+              <dl class="dg-readout"><div><dt>スクリーンのずれ</dt><dd data-out="shift">0°</dd></div><div><dt>結果</dt><dd data-out="result">—</dd></div></dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Screenshots <small>スクリーンショット</small></h2>
+      <div class="gallery">
+        <figure class="reveal">
+          <button type="button" class="zoomable" aria-label="拡大して見る：紹介映像より：HMD内のスクリーンが作る「前」を少しずつずらす様子"><img src="images/work4.jpg" alt="DriftWalk Theaterの紹介映像の一場面。左にHMD内のスクリーンの図、右にHMDを着けて歩く人の後ろ姿" loading="lazy"></button>
+          <figcaption>紹介映像より<wbr>：HMD内の<wbr>スクリーンが<wbr>作る<wbr>「前」を<wbr>少しずつずらす様子</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="detail-section" id="info">
+      <h2 class="reveal">Information <small>作品情報</small></h2>
+      <dl class="meta-grid reveal">
+        <div><dt>動作環境</dt><dd>ビデオプロトタイプの<wbr>ため実装なし<wbr>（想定デバイス：HMD、<wbr>GVS用電極）<wbr> / 映像制作：Canva<wbr>（素材の<wbr>一部は<wbr>PowerPointで<wbr>作成）</dd></div>
+        <div><dt>公表日</dt><dd>2026年6月12日<wbr>（2年次 仮配属ゼミ 渡邊研究室 春学期中間発表）</dd></div>
+        <div><dt>制作形態</dt><dd>個人制作</dd></div>
+      </dl>
+    </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work3.html"><small>← Prev / 03</small><b>CHROMATIC SHIFT</b></a>
+      <a href="work5.html"><small>Next / 05 →</small><b>UNSPOKEN</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>

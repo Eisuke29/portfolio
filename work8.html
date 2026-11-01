@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>マクドナルドアプリ UIトレース | WORKS</title>
+  <meta name="description" content="Figma で日本マクドナルド公式アプリの30画面と画面遷移を再現したプロトタイプ（学習目的の非公式トレース）">
+  <!-- 選んだテーマを最初に反映（白→黒のちらつきを防ぐ） -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; }
+    catch (e) { document.documentElement.dataset.theme = "dark"; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/v2.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v2-motion.css?v=20261101145932">
+  <link rel="stylesheet" href="css/v3.css?v=20261101145932">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ<wbr>スキップ</a>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Eisuke Kinoshita トップへ"><span>Eisuke Kinoshita</span><b>.</b></a>
+    <nav class="site-nav" id="siteNav" aria-label="サイト内">
+      <a href="index.html#about">About</a>
+      <a href="works.html" aria-current="page">Works</a>
+      <a href="index.html#history">History</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button type="button" class="icon-btn theme-toggle" id="themeToggle" aria-label="ライト/ダークを切り替える">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+    </button>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="メニュー" aria-expanded="false" aria-controls="siteNav"><span></span><span></span></button>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="detail-hero">
+      <div class="bg" style="background-image:url(images/work8.jpg)" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="no" data-hero>Work 08 <span>/ 10</span></p>
+        <h1 data-split data-hero>McDonald's App Trace</h1>
+        <p class="lead reveal ap" data-hero>Figma で、マクドナルド公式アプリの30画面と画面遷移を完全再現したプロトタイプ</p>
+        <div class="detail-links reveal" data-hero>
+          <a class="btn primary" href="#play">▶ その場で触る</a>
+          <a class="btn" href="#how">見どころ ↓</a>
+          <a class="btn" href="#info">作品に<wbr>ついて<wbr> ↓</a>
+          <a class="btn" href="https://github.com/Eisuke29/mcdonalds-app-trace" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="detail-back" href="works.html">作品一覧へ<wbr> ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+    <section class="detail-section">
+      <h2 class="reveal">About <small>説明</small></h2>
+      <div class="prose about ap">
+        <p class="lead reveal">いつも使っているアプリを、<strong>見た目だけでなく、さわり心地まで</strong>そっくり再現することを目指した UI トレースです。</p>
+        <p class="reveal">ゼミの Figma 入門課題として、日本マクドナルドの公式アプリを題材に、ホーム・クーポン・リワード・デリバリー・モバイルオーダーの<strong>30画面</strong>をスマホの実寸で作りました。</p>
+        <p class="reveal">画面を並べるだけでなく、<strong>画面と画面をつなぐ遷移</strong>まで作り込んでいます。下のタブで5つの画面を行き来でき、店舗を選ぶ → メニュー → 商品 → ドリンクを選ぶ → 注文内容の確認まで、実際のアプリと同じ順番でたどれます。</p>
+        <p class="notice reveal ap"><b>おことわり</b>学習のために公式アプリを再現した、非公式の制作物です。日本マクドナルド株式会社とは関係ありません。ロゴ・商品写真・店舗情報などの権利は、日本マクドナルド株式会社に帰属します。</p>
+      </div>
+    </section>
+    <section class="detail-section" id="play">
+      <h2 class="reveal">Play <small>その場で触る</small></h2>
+      <div class="play-card reveal">
+        <div>
+          <p class="play-lead">スマホと同じように、押して・スクロールして試せます</p>
+          <button type="button" class="play-cta" data-embed-src="https://embed.figma.com/proto/EruDPWL0RaFiqDk5ayh19N/?node-id=1-4108&amp;starting-point-node-id=1%3A4108&amp;scaling=contain&amp;content-scaling=fixed&amp;hide-ui=1&amp;embed-host=share" data-embed-title="マクドナルドアプリ UIトレース（Figma プロトタイプ）" data-embed-target="#figmaEmbed">
+            <span class="play-cta-icon" aria-hidden="true">▶</span>
+            <span class="play-cta-text"><b>このページで触る</b><small>Figma のプロトタイプを読み込みます</small></span>
+          </button>
+          <ul class="play-req"><li><span>端末</span>PC・スマホ</li><li><span>操作</span>クリック・スクロール</li><li><span>画面</span>30</li></ul>
+          <p class="hint-blue ap"><span class="hint-blue-swatch" aria-hidden="true"></span><span>押せる場所が分からないときは、画面のどこかを押してみてください。<b>青く光る部分</b>が、押して操作できる場所です。</span></p>
+          <ol class="try-list ap">
+            <li>まず黄色い <b>×</b> でキャンペーンのお知らせを閉じる</li>
+            <li>下のタブで <b>クーポン・リワード・デリバリー・オーダー</b> を行き来する</li>
+            <li><b>オーダー</b> → 店舗一覧 → 店舗 → 商品 → ドリンクを選ぶ → <b>レジに進む</b></li>
+          </ol>
+          <p class="play-sub"><a class="how-link" href="https://www.figma.com/proto/EruDPWL0RaFiqDk5ayh19N/?node-id=1-4108&amp;starting-point-node-id=1%3A4108&amp;scaling=scale-down" target="_blank" rel="noopener">Figma で大きく開く ↗</a></p>
+        </div>
+        <div class="phone-embed" id="figmaEmbed">
+          <video src="images/work8.mp4?v=20261101145932" poster="images/work8_home.jpg" autoplay muted loop playsinline preload="metadata" aria-label="操作の様子"></video>
+          <span class="phone-embed-cap">操作の様子（34秒）</span>
+        </div>
+      </div>
+    </section>
+    <section class="detail-section" id="how">
+      <h2 class="reveal">Points <small>見どころ</small></h2>
+      <div class="prose ap">
+        <ol class="steps-list reveal">
+          <li><b>30画面を実寸で</b><span>iPhone と同じ 402×874 の画面に、ホーム・アカウント・ポイント・クーポン・リワード・デリバリー・モバイルオーダー、メニュー9カテゴリ、購入の4画面までを作りました。</span></li>
+          <li><b>画面遷移をすべてつなぐ</b><span>下のタブ5つ、店舗一覧 → 店舗 → メニュー → 商品 → 注文確定まで、実際のアプリと同じ道すじでたどれます。メニュー上部のカテゴリも切り替えられます。</span></li>
+          <li><b>動きの再現</b><span>起動時にキャンペーンのお知らせが重なって開き、× で閉じる。地図の上に店舗一覧のシートが出る。ドリンクを選ぶと内容が増えて「レジに進む」が押せるようになる。</span></li>
+          <li><b>スクロール</b><span>ホームや注文確認の画面は、画面の中だけがスクロールし、上の見出しと下のタブは固定されたまま。</span></li>
+        </ol>
+      </div>
+    </section>
+    <section class="detail-section">
+      <h2 class="reveal">Screens <small>画面</small></h2>
+      <div class="screens">
+        <figure class="reveal"><button type="button" class="zoomable" aria-label="拡大して見る：起動時のお知らせ"><img src="images/work8_home.jpg" alt="ホーム画面の上にキャンペーンのお知らせが重なって開いた画面" loading="lazy"></button><figcaption>起動時のお知らせ</figcaption></figure>
+        <figure class="reveal" style="--d:1"><button type="button" class="zoomable" aria-label="拡大して見る：店舗を地図から選ぶ"><img src="images/work8_map.jpg" alt="モバイルオーダーの地図。店舗のピンと店舗一覧のシート" loading="lazy"></button><figcaption>店舗を地図から選ぶ</figcaption></figure>
+        <figure class="reveal" style="--d:2"><button type="button" class="zoomable" aria-label="拡大して見る：メニュー"><img src="images/work8_menu.jpg" alt="店舗のメニュー。おすすめのセットが並ぶ" loading="lazy"></button><figcaption>メニュー（9カテゴリ）</figcaption></figure>
+        <figure class="reveal"><button type="button" class="zoomable" aria-label="拡大して見る：商品とドリンク選び"><img src="images/work8_item.jpg" alt="商品の詳細。ドリンクを選ぶボタン" loading="lazy"></button><figcaption>商品とドリンク選び</figcaption></figure>
+        <figure class="reveal" style="--d:1"><button type="button" class="zoomable" aria-label="拡大して見る：受け取り方法の選択"><img src="images/work8_order.jpg" alt="注文内容の確定。受け取り方法を選ぶ" loading="lazy"></button><figcaption>受け取り方法の選択</figcaption></figure>
+        <figure class="reveal" style="--d:2"><button type="button" class="zoomable" aria-label="拡大して見る：リワード"><img src="images/work8_reward.jpg" alt="リワード画面。ポイントで交換できるグッズやクーポン" loading="lazy"></button><figcaption>リワード</figcaption></figure>
+      </div>
+    </section>
+    <section class="detail-section" id="info">
+      <h2 class="reveal">Information <small>作品情報</small></h2>
+      <dl class="meta-grid reveal">
+        <div><dt>ツール</dt><dd>Figma<wbr>（デザイン・プロトタイプ）</dd></div>
+        <div><dt>制作時期</dt><dd>2026年5月<wbr>（ゼミの Figma 入門課題）</dd></div>
+        <div><dt>発表日</dt><dd>2026年5月26日<wbr>（前期B2ゼミ）</dd></div>
+        <div><dt>制作形態</dt><dd>個人制作<wbr>（既存アプリのトレース）</dd></div>
+        <div><dt>権利</dt><dd>学習目的の非公式な再現です。<wbr>ロゴ・商品写真・店舗情報などの権利は日本マクドナルド株式会社に帰属します</dd></div>
+      </dl>
+    </section>
+    </div>
+
+    <nav class="pager" aria-label="前後の作品">
+      <a href="work7.html"><small>← Prev / 07</small><b>みんなの組体操</b></a>
+      <a href="work9.html"><small>Next / 09 →</small><b>Snapmap</b></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="footer-big" href="works.html">See all works <span class="arrow">→</span></a>
+      <div class="footer-row">
+        <small>本内容の<wbr>著作権は<wbr>木下瑛介に<wbr>属します。<wbr> / Copyright &copy; Eisuke Kinoshita.</small>
+        <span class="footer-links"><a href="index.html#contact">CONTACT</a><a href="index.html">TOP</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" class="icon-btn to-top" id="toTop" aria-label="ページの先頭へ">
+    <svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20"/></svg>↑
+  </button>
+  <script src="js/main.js"></script>
+  <script src="js/v2.js?v=20261101145932"></script>
+  <script src="js/v2-motion.js?v=20261101145932"></script>
+  <script src="js/v3.js?v=20261101145932"></script>
+</body>
+</html>
