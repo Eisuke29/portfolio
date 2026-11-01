@@ -71,7 +71,6 @@
       </section>
       <section class="detail-section" id="how">
         <h2 class="reveal">Process <small>処理の流れ</small></h2>
-        <figure class="reveal"><button type="button" class="zoomable" aria-label="拡大して見る：人物検出と骨格推定の模式図"><img src="images/work10_process.svg" alt="人物領域を検出し、17点のキーポイントと骨格を重ねる処理の模式図" width="960" height="540" loading="lazy"></button><figcaption>処理を説明する模式図です。実際の推定結果ではありません。</figcaption></figure>
         <div class="prose ap"><ol class="steps-list reveal">
           <li><b>明るさを整える</b><span>動画を1フレームずつ取り出し、HSV色空間の明度を1.2倍に調整します。</span></li>
           <li><b>人物を見つける</b><span>YOLOv4で人物領域を検出し、人物のラベルだけを次の処理に渡します。</span></li>
